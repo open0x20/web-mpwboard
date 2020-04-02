@@ -1,4 +1,4 @@
-# mpwdash
+# web-mpwboard
 
 ## Project setup
 ```
