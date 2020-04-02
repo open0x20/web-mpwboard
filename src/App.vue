@@ -130,7 +130,7 @@ export default Vue.extend({
         { title: "YouTubeDL", icon: "mdi-download", route: "/apps/ytdl" },
         { title: "NAS-Browser", icon: "mdi-forum", route: "/apps/nas-browser" }
       ]
-    },
+    }
   })
 });
 </script>

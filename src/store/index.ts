@@ -8,14 +8,19 @@ export default new Vuex.Store({
     apis: {
       apps: {
         youtubedl: {
-          directLinks: []
+          directLinkData: []
         }
+      }
+    },
+    views: {
+      youtubedl: {
+        directLinkInputValue: ""
       }
     }
   },
   mutations: {
     setAppsYoutubedlDirectLinks: (state, links) => {
-      state.apis.apps.youtubedl.directLinks = links;
+      state.apis.apps.youtubedl.directLinkData = links;
     }
   },
   actions: {},

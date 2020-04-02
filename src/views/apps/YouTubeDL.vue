@@ -4,7 +4,9 @@
       <v-row align="center" justify="center">
         <v-col cols="12">
           <h2 class="title">YouTube-Downloader</h2>
-          <p class="font-weight-light">A tool to download, convert and manage YouTube&#8482; videos.</p>
+          <p class="font-weight-light">
+            A tool to download, convert and manage YouTube&#8482; videos.
+          </p>
         </v-col>
         <v-col cols="12">
           <Sheet title="Direct Link Extractor">
@@ -19,12 +21,14 @@
                       <v-text-field
                         solo
                         label="Video-URL"
-                        hint="Example: https://youtube.com/watch?v=dQw4w9WgXcQ"
-                        v-model="inputDirectLinks"
+                        hint="https://youtube.com/watch?v=dQw4w9WgXcQ...."
+                        v-model="directLinkExtractor.input"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="4">
-                      <v-btn class="" large @click="clickOnExtract"
+                    <v-col cols="4" align-self="baseline">
+                      <v-btn
+                        large
+                        @click="directLinkExtractorOnClickExtract"
                         >Extract</v-btn
                       >
                     </v-col>
@@ -33,13 +37,13 @@
                 <v-col cols="12">
                   <template>
                     <v-data-table
-                      :headers="tableDirectLinks.tableHeaders"
-                      :items="getTableDirectLinksData"
+                      :headers="directLinkExtractor.table.headers"
+                      :items="getDirectLinkTableData"
                       :sort-by="['itag']"
                       :sort-desc="[false]"
                       hide-default-footer
-                      items-per-page="100"
-                      :loading="tableDirectLinks.isLoading"
+                      :items-per-page="100"
+                      :loading="directLinkExtractor.table.isLoading"
                       class="elevation-1"
                     >
                       <template v-slot:item.url="{ item }">
@@ -63,7 +67,7 @@
             <v-container>
               <v-text-field
                 label="Direct Link URL"
-                value="http://localhost:3000/public/video_info.php"
+                :value="directLinkExtractor.api"
                 disabled
               ></v-text-field>
             </v-container>
@@ -84,48 +88,51 @@ export default Vue.extend({
   name: "YouTubeDL",
   components: { Sheet },
   data: () => ({
-    inputDirectLinks: "",
-    tableDirectLinks: {
-      isLoading: false,
-      tableHeaders: [
-        {
-          text: "iTag",
-          align: "start",
-          sortable: true,
-          value: "itag"
-        },
-        { text: "Format", value: "format" },
-        { text: "Url", value: "url" }
-      ],
-      tableData: []
+    directLinkExtractor: {
+      api: "http://localhost:3000/public/video_info.php",
+      input: "",
+      table: {
+        isLoading: false,
+        headers: [
+          {
+            text: "iTag",
+            align: "start",
+            sortable: true,
+            value: "itag"
+          },
+          { text: "Format", value: "format" },
+          { text: "Url", value: "url" }
+        ]
+      }
     }
   }),
   methods: {
-    onInputChangedDirectLinks: function(event) {
-      console.log(event.target);
-      this.inputDirectLinks = event.target.value;
-    },
-    clickOnExtract: function() {
-      this.tableDirectLinks.isLoading = true;
+    directLinkExtractorOnClickExtract: function() {
+      this.directLinkExtractor.table.isLoading = true;
+      this.$store.state.views.youtubedl.directLinkInputValue = this.directLinkExtractor.input;
       Axios.get(
-        "http://localhost:3000/public/video_info.php" +
+        this.directLinkExtractor.api +
           "?url=" +
-          encodeURI(this.inputDirectLinks)
+          encodeURI(this.directLinkExtractor.input)
       )
         .then(response => {
-          this.$store.state.apis.apps.youtubedl.directLinks =
+          this.$store.state.apis.apps.youtubedl.directLinkData =
             response.data.links;
-          this.tableDirectLinks.isLoading = false;
+          this.directLinkExtractor.table.isLoading = false;
         })
         .catch(error => {
-          this.$store.state.apis.apps.youtubedl.directLinks = [];
-          this.tableDirectLinks.isLoading = false;
+          this.$store.state.apis.apps.youtubedl.directLinkData = [];
+          this.directLinkExtractor.table.isLoading = false;
           console.log(error);
         });
     }
   },
   computed: mapState({
-    getTableDirectLinksData: state => state.apis.apps.youtubedl.directLinks
-  })
+    getDirectLinkTableData: state => state.apis.apps.youtubedl.directLinkData,
+    getDirectLinkInputValue: state => state.views.youtubedl.directLinkInputValue
+  }),
+  mounted() {
+    this.directLinkExtractor.input = this.$store.state.views.youtubedl.directLinkInputValue;
+  }
 });
 </script>
