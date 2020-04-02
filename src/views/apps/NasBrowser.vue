@@ -34,7 +34,7 @@
             <v-container>
               <v-text-field
                 label="URL"
-                value="http://localhost:80/"
+                :value="iFrameSrc"
                 disabled
               ></v-text-field>
             </v-container>
@@ -57,8 +57,8 @@ export default Vue.extend({
   }),
   methods: {
     iFrameBack: () => {
-      //document.getElementById("nasBrowserIFrame").contentWindow.history.back();
       // This might throw an error in case the iframe src is not on the same domain+port (origin)
+      //document.getElementById("nasBrowserIFrame").contentWindow.history.back();
       // Temporary workaround TODO
       document.getElementById("nasBrowserIFrame").src = document.getElementById("nasBrowserIFrame").src;
     },
