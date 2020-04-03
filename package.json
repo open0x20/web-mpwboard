@@ -26,7 +26,6 @@
     "@vue/cli-plugin-typescript": "^4.2.0",
     "@vue/cli-plugin-vuex": "^4.2.0",
     "@vue/cli-service": "^4.2.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.1",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.1",
@@ -46,16 +45,13 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
+      "plugin:vue/strongly-recommended",
       "eslint:recommended",
-      "@vue/typescript/recommended",
-      "@vue/prettier",
-      "@vue/prettier/@typescript-eslint"
+      "@vue/typescript/recommended"
     ],
     "parserOptions": {
       "ecmaVersion": 2020
-    },
-    "rules": {}
+    }
   },
   "browserslist": [
     "> 1%",
