@@ -6,7 +6,7 @@ import Chat from "@/views/Chat.vue";
 import Examples from "@/views/Examples.vue";
 
 // Custom Apps
-import YouTubeDL from "@/views/apps/YouTubeDL.vue";
+import YouTubeDl from "@/views/apps/YouTubeDl/YouTubeDl.vue";
 import NasBrowser from "@/views/apps/NasBrowser.vue";
 
 Vue.use(VueRouter);
@@ -38,8 +38,8 @@ const routes = [
   },
   {
     path: "/apps/ytdl",
-    name: "YouTubeDL",
-    component: YouTubeDL
+    name: "YouTubeDl",
+    component: YouTubeDl
   },
   {
     path: "/apps/nas-browser",
