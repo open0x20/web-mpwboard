@@ -1,19 +1,51 @@
 <template>
   <div class="about">
     <v-container>
-      <v-row align="center" justify="center">
+      <v-row
+        align="center"
+        justify="center"
+      >
         <v-col cols="12">
-          <h2 class="title">About</h2>
-          <p class="font-weight-light">Hier steht alles zur aktuellen Version.</p>
+          <h2 class="title">
+            About
+          </h2>
+          <p class="font-weight-light">
+            Hier steht alles zur aktuellen Version.
+          </p>
         </v-col>
         <v-col cols="12">
-          <Sheet title="Details">
-            <Sheet title="Hallo2">
-              <Sheet title="Hallo3">
-                OK!
-              </Sheet>
+          <v-col cols="12">
+            <Sheet title="Additional Information">
+              <v-container>
+                <p class="font-weight-light">
+                  YouTubeDl / Direct Link
+                </p>
+                <v-text-field
+                  label="API Endpoint"
+                  value="http://localhost:3000/public/video_info.php"
+                  disabled
+                />
+                <v-text-field
+                  label="Project Source"
+                  value="https://github.com/Athlon1600/youtube-downloader"
+                  disabled
+                />
+                <p class="font-weight-light">
+                  NAS-Browser
+                </p>
+                <v-text-field
+                  label="API Endpoint"
+                  value="http://localhost:80/index.php"
+                  disabled
+                />
+                <v-text-field
+                  label="Project Source"
+                  value="https://gitlab.com/0x6861636b657220/web-nas-browser"
+                  disabled
+                />
+              </v-container>
             </Sheet>
-          </Sheet>
+          </v-col>
         </v-col>
       </v-row>
     </v-container>

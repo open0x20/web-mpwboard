@@ -1,12 +1,17 @@
 <template>
   <div class="nas-browser">
     <v-container>
-      <v-row align="center" justify="center">
+      <v-row
+        align="center"
+        justify="center"
+      >
         <v-col cols="12">
-          <h2 class="title">NAS-Browser</h2>
+          <h2 class="title">
+            NAS-Browser
+          </h2>
           <p class="font-weight-light">
             The beloved, web-based, (kinda) slow but multifunctional file
-            browser, used by a lot of IT savvy people. <br />
+            browser, used by a lot of IT savvy people. <br>
             <i>
               Hint: Use the arrows to navigate back and forth in case you opened
               a file for display.
@@ -14,10 +19,17 @@
           </p>
         </v-col>
         <v-col cols="12">
-          <v-btn small @click="iFrameBack">
+          <v-btn
+            small
+            @click="iFrameBack"
+          >
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
-          <v-btn class="ma-2" small @click="iFrameForward">
+          <v-btn
+            class="ma-2"
+            small
+            @click="iFrameForward"
+          >
             <v-icon>mdi-arrow-right</v-icon>
           </v-btn>
           <iframe
@@ -27,18 +39,7 @@
             width="100%"
             height="750em"
             style="background: black"
-          ></iframe>
-        </v-col>
-        <v-col cols="12">
-          <Sheet title="Additional information">
-            <v-container>
-              <v-text-field
-                label="URL"
-                :value="iFrameSrc"
-                disabled
-              ></v-text-field>
-            </v-container>
-          </Sheet>
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -47,11 +48,10 @@
 
 <script>
 import Vue from "vue";
-import Sheet from "@/components/Sheet.vue";
 
 export default Vue.extend({
   name: "NasBrowser",
-  components: { Sheet },
+  components: {},
   data: () => ({
     iFrameSrc: "http://localhost:80/index.php"
   }),
