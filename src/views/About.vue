@@ -59,6 +59,9 @@
 
   export default Vue.extend({
     name: "About",
-    components: {Sheet}
+    components: {Sheet},
+    data: () => ({
+      Globals: Globals
+    })
   });
 </script>

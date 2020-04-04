@@ -20,14 +20,16 @@
         </v-col>
         <v-col cols="12">
           <v-alert
-                  prominent
-                  type="error"
-                  dismissible
-                  v-show="showAlert"
-                  transition="scale-transition"
+            prominent
+            type="error"
+            dismissible
+            v-show="showAlert"
+            transition="scale-transition"
           >
             <v-row align="center">
-              <v-col class="grow">Can't reach NAS</v-col>
+              <v-col class="grow">
+                Can't reach NAS
+              </v-col>
             </v-row>
           </v-alert>
           <v-btn
@@ -66,13 +68,14 @@ export default Vue.extend({
   name: "NasBrowser",
   components: {},
   data: () => ({
+    Globals: Globals,
     showAlert: false,
     src: ""
   }),
   mounted: function () {
-    Axios.head(Globals.API_URL__NAS_BROWSER)
+    Axios.head(this.Globals.API_URL__NAS_BROWSER)
       .then(() => {
-        this.src = Globals.API_URL__NAS_BROWSER
+        this.src = this.Globals.API_URL__NAS_BROWSER
       })
       .catch(() => {
         this.showAlert = true;

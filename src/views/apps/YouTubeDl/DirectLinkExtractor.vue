@@ -77,7 +77,7 @@ export default Vue.extend({
   name: "YouTubeDL",
   components: { Sheet },
   data: () => ({
-    api: Globals.API_URL__YTDL_DIRECT_LINK_EXTRACTOR,
+    Globals: Globals,
     input: "",
     table: {
       isLoading: false,
@@ -93,7 +93,7 @@ export default Vue.extend({
       this.table.isLoading = true;
       this.$store.commit("setViewsYoutubedlDirectLinkInputValue", this.input);
       Axios.get(
-        this.api +
+        this.Globals.API_URL__YTDL_DIRECT_LINK_EXTRACTOR +
           "?url=" +
           encodeURI(this.input)
       )
