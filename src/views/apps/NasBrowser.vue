@@ -19,6 +19,17 @@
           </p>
         </v-col>
         <v-col cols="12">
+          <v-alert
+                  prominent
+                  type="error"
+                  dismissible
+                  v-show="showAlert"
+                  transition="scale-transition"
+          >
+            <v-row align="center">
+              <v-col class="grow">Can't reach NAS</v-col>
+            </v-row>
+          </v-alert>
           <v-btn
             small
             @click="iFrameBack"
@@ -48,14 +59,25 @@
 
 <script>
 import Vue from "vue";
+import Axios from "axios";
 import Globals from "@/globals";
 
 export default Vue.extend({
   name: "NasBrowser",
   components: {},
   data: () => ({
-    src: Globals.API_URL__NAS_BROWSER,
+    showAlert: false,
+    src: ""
   }),
+  mounted: function () {
+    Axios.head(Globals.API_URL__NAS_BROWSER)
+      .then(() => {
+        this.src = Globals.API_URL__NAS_BROWSER
+      })
+      .catch(() => {
+        this.showAlert = true;
+      })
+  },
   methods: {
     iFrameBack: () => {
       // This might throw an error in case the iframe src is not on the same domain+port (origin)
