@@ -22,7 +22,7 @@
                 </p>
                 <v-text-field
                   label="API Endpoint"
-                  value="http://localhost:3000/public/video_info.php"
+                  :value="Globals.API_URL__YTDL_DIRECT_LINK_EXTRACTOR"
                   disabled
                 />
                 <v-text-field
@@ -35,7 +35,7 @@
                 </p>
                 <v-text-field
                   label="API Endpoint"
-                  value="http://localhost:80/index.php"
+                  :value="Globals.API_URL__NAS_BROWSER"
                   disabled
                 />
                 <v-text-field
@@ -55,6 +55,7 @@
 <script lang="ts">
   import Vue from "vue";
   import Sheet from "@/components/Sheet.vue";
+  import Globals from "@/globals";
 
   export default Vue.extend({
     name: "About",

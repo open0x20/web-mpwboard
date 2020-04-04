@@ -34,7 +34,7 @@
           </v-btn>
           <iframe
             id="nasBrowserIFrame"
-            :src="iFrameSrc"
+            :src="src"
             sandbox=""
             width="100%"
             height="750em"
@@ -48,12 +48,13 @@
 
 <script>
 import Vue from "vue";
+import Globals from "@/globals";
 
 export default Vue.extend({
   name: "NasBrowser",
   components: {},
   data: () => ({
-    iFrameSrc: "http://localhost:80/index.php"
+    src: Globals.API_URL__NAS_BROWSER,
   }),
   methods: {
     iFrameBack: () => {
