@@ -68,6 +68,7 @@
 
 <script>
 import Vue from "vue";
+import Globals from "@/globals";
 import Axios from "axios";
 import Sheet from "@/components/Sheet.vue";
 import { mapState, mapGetters } from "vuex";
@@ -76,8 +77,7 @@ export default Vue.extend({
   name: "YouTubeDL",
   components: { Sheet },
   data: () => ({
-    api: "http://localhost:3000/public/video_info.php",
-    source: "https://github.com/Athlon1600/youtube-downloader",
+    api: Globals.API_URL__YTDL_DIRECT_LINK_EXTRACTOR,
     input: "",
     table: {
       isLoading: false,
