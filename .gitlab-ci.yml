@@ -41,11 +41,10 @@ stage_deploy:
   stage: deploy
   script:
     - ls -al
-    - npm install
-    - npm run build
-    - cd dist/
+    - mv dist web-mpwboard
+    - cd web-mpwboard/
     - ls
     - sshpass -V
     - export SSHPASS=$DEPLOY_PASS
-    - sshpass -e scp -o stricthostkeychecking=no -r -P $DEPLOY_PORT . $DEPLOY_TARGET
+    - sshpass -e scp -o stricthostkeychecking=no -P $DEPLOY_PORT -r $(pwd) $DEPLOY_TARGET
 
