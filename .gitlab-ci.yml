@@ -28,6 +28,9 @@ stage_build:
   stage: build
   only:
     - master
+  artifacts:
+    paths:
+      - dist/
   tags:
     - node 
   script:
@@ -37,12 +40,12 @@ stage_build:
 stage_deploy:
   stage: deploy
   script:
-    - ls
+    - ls -al
     - npm install
     - npm run build
     - cd dist/
     - ls
     - sshpass -V
     - export SSHPASS=$DEPLOY_PASS
-    - sshpass -e scp -o stricthostkeychecking=no -r . $DEPLOY_TARGET
+    - sshpass -e scp -o stricthostkeychecking=no -r -P $DEPLOY_PORT . $DEPLOY_TARGET
 
