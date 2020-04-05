@@ -18,13 +18,16 @@ cache:
     - node_modules/
 
 before_script:  
-  - apt-get update -qq && apt-get install
+  - apt-get update -qq && apt-get install -y -qq sshpass
   
 stages:
   - build
+  - deploy
 
-Build:
+stage_build:
   stage: build
+  only:
+    - master
   artifacts:
     paths:
       - dist/
@@ -33,3 +36,15 @@ Build:
   script:
     - npm install
     - npm run build
+
+stage_deploy:
+  stage: deploy
+  script:
+    - nmp install
+    - npm run build
+    - cd dist/
+    - ls
+    - sshpass -V
+    - export SSHPASS=$DEPLOY_PASS
+    - sshpass -e scp -o stricthostkeychecking=no -r . $DEPLOY_TARGET
+
