@@ -28,9 +28,6 @@ stage_build:
   stage: build
   only:
     - master
-  artifacts:
-    paths:
-      - dist/
   tags:
     - node 
   script:
@@ -40,7 +37,8 @@ stage_build:
 stage_deploy:
   stage: deploy
   script:
-    - nmp install
+    - ls
+    - npm install
     - npm run build
     - cd dist/
     - ls
