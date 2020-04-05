@@ -25,6 +25,9 @@ stages:
 
 Build:
   stage: build
+  artifacts:
+    paths:
+      - dist/
   tags:
     - node 
   script:
