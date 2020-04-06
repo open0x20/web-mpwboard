@@ -1,24 +1,15 @@
-# web-mpwboard
+# Multi Purpose Web Board
+A platform for every small project out there with need for a small GUI.
 
-## Project setup
+## Setup for developing
 ```
-npm install
-```
+# Install npm for your platform
+?
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# Install vue cli tool (highly recommended)
+npm install -g @vue/cli
 
-### Compiles and minifies for production
+# Start dev gui
+cd web-mpwdboard/
+vue ui
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
