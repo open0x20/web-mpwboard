@@ -1,5 +1,5 @@
 # Multi Purpose Web Board
-A platform for every small project out there with need for a small GUI.
+A platform for every small project out there with the need for a small GUI.
 
 ## Setup for developing
 ```
