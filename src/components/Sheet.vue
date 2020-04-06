@@ -4,8 +4,8 @@
     class="mx-auto"
   >
     <v-sheet
-      color="primary"
-      min-height="3"
+      :color="color"
+      class="sheet-header"
     />
     <v-container>
       <h3 class="title">
@@ -26,8 +26,19 @@ export default Vue.extend({
     title: {
       type: String,
       default: ""
+    },
+    color: {
+      type: String,
+      default: "primary"
     }
   },
   data: () => ({})
 });
 </script>
+
+<style>
+  .sheet-header {
+    border-radius: 4px 4px 0px 0px;
+    min-height: 6px;
+  }
+</style>
