@@ -1,9 +1,14 @@
 <template>
   <div class="examples">
     <v-container>
-      <v-row align="center" justify="center">
+      <v-row
+        align="center"
+        justify="center"
+      >
         <v-col cols="12">
-          <h2 class="headline">Examples</h2>
+          <h2 class="headline">
+            Examples
+          </h2>
           <p class="font-weight-light">
             Examples for sheets, tables and other vue components.
           </p>
@@ -13,19 +18,28 @@
           <!-- Sheet Example -->
           <Sheet title="Sheets">
             <v-container>
-              <p class="font-weight-light">A sheet containing more sheets.</p>
-              <v-row align="center" justify="center">
+              <p class="font-weight-light">
+                A sheet containing more sheets.
+              </p>
+              <v-row
+                align="center"
+                justify="center"
+              >
                 <v-col cols="6">
                   <Sheet title="Sheet A">
                     <v-container>
-                      <p class="font-weight-light">Lorem Ipsum dolor.</p>
+                      <p class="font-weight-light">
+                        Lorem Ipsum dolor.
+                      </p>
                     </v-container>
                   </Sheet>
                 </v-col>
                 <v-col cols="6">
                   <Sheet title="Sheet B">
                     <v-container>
-                      <p class="font-weight-light">Lorem Ipsum dolor.</p>
+                      <p class="font-weight-light">
+                        Lorem Ipsum dolor.
+                      </p>
                     </v-container>
                   </Sheet>
                 </v-col>
@@ -38,7 +52,9 @@
           <!-- Table Example -->
           <Sheet title="Tables">
             <v-container>
-              <p class="font-weight-light">Examples for different tables.</p>
+              <p class="font-weight-light">
+                Examples for different tables.
+              </p>
               <v-data-table
                 :headers="headers"
                 :items="desserts"
@@ -46,7 +62,7 @@
                 :sort-desc="[false, true]"
                 multi-sort
                 class="elevation-1"
-              ></v-data-table>
+              />
             </v-container>
           </Sheet>
         </v-col>

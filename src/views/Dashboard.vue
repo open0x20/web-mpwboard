@@ -1,10 +1,17 @@
 <template>
   <div class="dashboard">
     <v-container>
-      <v-row align="center" justify="center">
+      <v-row
+        align="center"
+        justify="center"
+      >
         <v-col cols="12">
-          <h2 class="title">Dashboard</h2>
-          <p class="font-weight-light">TODO</p>
+          <h2 class="title">
+            Dashboard
+          </h2>
+          <p class="font-weight-light">
+            TODO
+          </p>
         </v-col>
       </v-row>
     </v-container>
