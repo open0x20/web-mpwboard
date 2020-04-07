@@ -27,7 +27,7 @@
               >
                 <v-btn
                   min-height="48"
-                  @click="directLinkExtractorOnClickExtract"
+                  @click="onClickExtract"
                 >
                   Extract
                 </v-btn>
@@ -42,7 +42,7 @@
               <v-data-table
                 :loading="table.isLoading"
                 :headers="table.headers"
-                :items="getDirectLinkTableData"
+                :items="getTableData"
                 :sort-by="['itag']"
                 :sort-desc="[false]"
                 :items-per-page="100"
@@ -89,7 +89,7 @@ export default Vue.extend({
     }
   }),
   methods: {
-    directLinkExtractorOnClickExtract: function() {
+    onClickExtract: function() {
       this.table.isLoading = true;
       this.$store.commit("setViewsYoutubedlDirectLinkInputValue", this.input);
       Axios.get(
@@ -110,8 +110,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapState({
-      getDirectLinkTableData: state => state.apis.apps.youtubedl.directLinkData,
-      getDirectLinkInputValue: state => state.views.youtubedl.directLinkInputValue
+      getTableData: state => state.apis.apps.youtubedl.directLinkData,
+      getInputValue: state => state.views.youtubedl.directLinkInputValue
     }),
     ...mapGetters({
       getViewsYoutubedlDirectLinkInputValue: "getViewsYoutubedlDirectLinkInputValue"
