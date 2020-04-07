@@ -71,7 +71,7 @@ import Vue from "vue";
 import Globals from "@/globals";
 import Axios from "axios";
 import Sheet from "@/components/Sheet.vue";
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default Vue.extend({
   name: "YouTubeDL",
@@ -109,16 +109,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState({
-      getTableData: state => state.apis.apps.youtubedl.directLinkData,
-      getInputValue: state => state.views.youtubedl.directLinkInputValue
-    }),
     ...mapGetters({
-      getViewsYoutubedlDirectLinkInputValue: "getViewsYoutubedlDirectLinkInputValue"
+      getTableData: "getApisAppsYoutubedlDirectLinkData",
+      getInputValue: "getViewsYoutubedlDirectLinkInputValue"
     })
   },
   mounted() {
-    this.input = this.getViewsYoutubedlDirectLinkInputValue;
+    this.input = this.getInputValue;
   }
 });
 </script>

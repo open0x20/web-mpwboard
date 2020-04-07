@@ -19,6 +19,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getApisAppsYoutubedlDirectLinkData(state) {
+      return state.apis.apps.youtubedl.directLinkData;
+    },
     getViewsYoutubedlDirectLinkInputValue(state) {
       return state.views.youtubedl.directLinkInputValue;
     }
