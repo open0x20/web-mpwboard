@@ -8,7 +8,8 @@ export default new Vuex.Store({
     apis: {
       apps: {
         youtubedl: {
-          directLinkData: []
+          directLinkData: [],
+          songsData: []
         }
       }
     },
@@ -24,6 +25,9 @@ export default new Vuex.Store({
     },
     getViewsYoutubedlDirectLinkInputValue(state) {
       return state.views.youtubedl.directLinkInputValue;
+    },
+    getApisAppsYoutubedlSongsData(state) {
+      return state.apis.apps.youtubedl.songsData;
     }
   },
   mutations: {
@@ -32,6 +36,9 @@ export default new Vuex.Store({
     },
     setViewsYoutubedlDirectLinkInputValue: (state, value) => {
       state.views.youtubedl.directLinkInputValue = value;
+    },
+    setApisAppsYoutubedlSongsData(state, value) {
+      state.apis.apps.youtubedl.songsData = value;
     }
   },
   actions: {},

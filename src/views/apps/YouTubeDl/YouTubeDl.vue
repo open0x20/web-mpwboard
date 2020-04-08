@@ -14,6 +14,9 @@
           </p>
         </v-col>
         <v-col cols="12">
+          <Songs />
+        </v-col>
+        <v-col cols="12">
           <DirectLinkExtractor />
         </v-col>
       </v-row>
@@ -24,10 +27,11 @@
 <script>
 import Vue from "vue";
 import DirectLinkExtractor from "@/views/apps/YouTubeDl/DirectLinkExtractor";
+import Songs from "@/views/apps/YouTubeDl/Songs";
 
 export default Vue.extend({
   name: "YouTubeDL",
-  components: { DirectLinkExtractor },
+  components: { DirectLinkExtractor, Songs },
   data: () => ({}),
   methods: {},
   computed: {},
