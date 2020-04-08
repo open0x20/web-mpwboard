@@ -15,10 +15,10 @@ stages:
 stage_build:
   stage: build
   image: node:13.12-buster-slim
-  before_script:
-    - apt-get update -qq && apt-get install
   only:
     - master
+  before_script:
+    - apt-get update -qq && apt-get install
   artifacts:
     paths:
       - dist/
@@ -31,6 +31,8 @@ stage_build:
 stage_deploy:
   stage: deploy
   image: debian:10.3-slim
+  only:
+    - master
   before_script:
     - apt-get update -qq && apt-get install -y -qq sshpass
   script:
