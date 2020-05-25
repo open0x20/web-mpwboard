@@ -5,7 +5,7 @@
         <v-row>
           <v-col cols="12">
             <p class="font-weight-light">
-              Paste a YouTube link and click on extract!
+              Paste a video link and click on extract!
             </p>
             <v-row>
               <v-col
