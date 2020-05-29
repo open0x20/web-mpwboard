@@ -50,7 +50,8 @@
                       <template v-slot:activator="{ on }">
                         <v-icon
                           v-on="on"
-                          @click="loadTableData"
+                          :disabled="btnRefreshDisabled"
+                          @click="clickRefresh"
                         >
                           mdi-refresh
                         </v-icon>
@@ -245,6 +246,7 @@ export default Vue.extend({
           ],
           data: []
       },
+      btnRefreshDisabled: false,
       inputFormat: '',
       cmbArtists: '3 - All Artists',
       cmbFeaturings: '3 - Few Feat. Artists',
@@ -270,6 +272,14 @@ export default Vue.extend({
             this.table.isLoading = false;
             console.log(error);
           });
+      },
+      clickRefresh: function() {
+        this.table.isLoading = true;
+        this.btnRefreshDisabled = true;
+        setTimeout(() => {
+          this.loadTableData();
+          this.btnRefreshDisabled = false;
+        },1500)
       },
       mapIntoTableData: function(data) {
         const finalTableData = [];
