@@ -8,7 +8,7 @@
       class="sheet-header"
     />
     <v-container>
-      <h3 class="title">
+      <h3 class="title pa-2">
         {{ title }}
       </h3>
       <v-divider />
