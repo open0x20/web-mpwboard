@@ -75,6 +75,10 @@
               :headers="table.headers"
               :items="table.data"
               :search="search"
+              :footer-props="{
+                itemsPerPageOptions: [15,50,100,-1]
+              }"
+              items-per-page="15"
               class="elevation-1"
             >
               <template v-slot:item.actions="{ item }">
