@@ -28,7 +28,9 @@
               <v-container class="pa-0 ma-0">
                 <v-row no-gutters>
                   <v-col>
-                    <h3 class="title">Songs</h3>
+                    <h3 class="title">
+                      Songs
+                    </h3>
                   </v-col>
                   <v-col
                     cols="1"
@@ -83,7 +85,7 @@
               :footer-props="{
                 itemsPerPageOptions: [15,50,100,-1]
               }"
-              items-per-page="15"
+              :items-per-page="15"
               class="elevation-1"
             >
               <template v-slot:item.actions="{ item }">
@@ -130,7 +132,6 @@
 
         <v-col
           cols="12"
-          class="pb-0"
         >
           <v-card>
             <v-card-title
@@ -214,6 +215,111 @@
             </v-container>
           </v-card>
         </v-col>
+
+        <v-col
+          cols="12"
+          class="pb-0"
+        >
+          <v-card>
+            <v-card-title
+              class="font-weight-medium"
+            >
+              Media Player
+            </v-card-title>
+            <v-divider />
+            <v-container class="player-background pt-0 pb-0">
+              <v-row
+                justify="space-between"
+                align="stretch"
+              >
+                <!-- Media Player - Metadata --->
+                <v-col cols="12" md="4" lg="4" xl="4">
+                  <v-row no-gutters justify="center">
+                    <v-col cols="auto" class="mr-2">
+                      <v-img
+                              src="https://i1.sndcdn.com/artworks-000062402673-f2f2f7-t500x500.jpg"
+                              min-height="75"
+                              max-height="75"
+                              min-width="75"
+                              max-width="75"
+                              class="border-radius-4 player-img-holder"
+                      />
+                    </v-col>
+                    <v-col>
+                      <p class="font-weight-regular white--text ma-0">
+                        Electricity
+                      </p>
+                      <p class="font-weight-light caption white--text ma-0">
+                        Silk City, Dua Lipa ft. Diplo, Mark Ronson
+                      </p>
+                    </v-col>
+                  </v-row>
+                </v-col>
+                <!-- Media Player - Main Controls --->
+                <v-col cols="12" md="8" lg="8" xl="8">
+                  <v-row
+                    no-gutters
+                  >
+                    <v-col
+                      cols="12"
+                      align="center"
+                      class="pt-2"
+                    >
+                      <v-icon
+                              class="pr-10"
+                              color="white"
+                              small
+                              @click="mediaPlayerClickLoop"
+                      >
+                        mdi-shuffle-variant
+                      </v-icon>
+                      <v-icon
+                        class="pr-2"
+                        color="white"
+                        large
+                        @click="mediaPlayerClickPrevious"
+                      >
+                        mdi-skip-backward
+                      </v-icon>
+                      <v-icon
+                        class="pr-2"
+                        color="white"
+                        large
+                        @click="mediaPlayerClickPlay"
+                      >
+                        {{ this.mediaPlayerBtnPlayIcon ? 'mdi-play' : 'mdi-pause' }}
+                      </v-icon>
+                      <v-icon
+                        class="pr-10"
+                        color="white"
+                        large
+                        @click="mediaPlayerClickNext"
+                      >
+                        mdi-skip-forward
+                      </v-icon>
+                      <v-icon
+                              color="white"
+                              small
+                              @click="mediaPlayerClickVolume"
+                      >
+                        mdi-volume-high
+                      </v-icon>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      class="pt-2"
+                    >
+                      <v-slider
+                        color="white"
+                        hide-details
+                      />
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-col>
       </v-row>
     </v-container>
   </Sheet>
@@ -252,6 +358,7 @@ export default Vue.extend({
       cmbFeaturings: '3 - Few Feat. Artists',
       cmbFeaturingStyle: '1 - ft.',
       cmbOrientation: '2 - Title/Artists',
+      mediaPlayerBtnPlayIcon: true
     }),
     methods: {
       loadTableData: function() {
@@ -372,7 +479,22 @@ export default Vue.extend({
                 'Electricity',
         );
 
-      }
+      },
+      mediaPlayerClickPrevious: function() {
+        //
+      },
+      mediaPlayerClickPlay: function() {
+        this.mediaPlayerBtnPlayIcon = !this.mediaPlayerBtnPlayIcon;
+      },
+      mediaPlayerClickNext: function() {
+        //
+      },
+      mediaPlayerClickLoop: function() {
+        //
+      },
+      mediaPlayerClickVolume: function() {
+        //
+      },
     },
     computed: {
         ...mapGetters({
@@ -389,3 +511,12 @@ export default Vue.extend({
     }
 });
 </script>
+
+<style>
+  .player-background {
+    background: #ff8000;;
+  }
+  .player-img-holder {
+    background-color: white;
+  }
+</style>
