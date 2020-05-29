@@ -4,12 +4,14 @@
       <v-row
         align="center"
         justify="center"
+        class="pl-4 pr-4"
       >
         <v-col cols="12">
-          <h2 class="title">
+          <h1 class="display-1">
             Multimedia
-          </h2>
-          <p class="font-weight-light">
+          </h1>
+          <v-divider></v-divider>
+          <p class="font-weight-light font-italic pt-2">
             A place where you can download, convert and manage multimedia content.
           </p>
         </v-col>

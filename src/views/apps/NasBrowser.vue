@@ -4,18 +4,16 @@
       <v-row
         align="center"
         justify="center"
+        class="pl-4 pr-4"
       >
         <v-col cols="12">
-          <h2 class="title">
+          <h1 class="display-1">
             NAS-Browser
-          </h2>
-          <p class="font-weight-light">
+          </h1>
+          <v-divider></v-divider>
+          <p class="font-weight-light font-italic pt-2">
             The beloved, web-based, (kinda) slow but multifunctional file
-            browser, used by a lot of IT savvy people. <br>
-            <i>
-              Hint: Use the arrows to navigate back and forth in case you opened
-              a file for display.
-            </i>
+            browser, used by a lot of IT savvy people.
           </p>
         </v-col>
         <v-col cols="12">

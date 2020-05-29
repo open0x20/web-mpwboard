@@ -7,10 +7,10 @@
       :color="color"
       class="sheet-header"
     />
-    <v-container>
-      <h3 class="title pa-2">
+    <v-container class="pt-0">
+      <h2 class="headline font-weight-light pa-3 pt-4">
         {{ title }}
-      </h3>
+      </h2>
       <v-divider />
       <slot />
     </v-container>

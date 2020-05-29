@@ -27,7 +27,9 @@
             <v-card-title>
               <v-container class="pa-0 ma-0">
                 <v-row no-gutters>
-                  <v-col>Songs</v-col>
+                  <v-col>
+                    <h3 class="title">Songs</h3>
+                  </v-col>
                   <v-col
                     cols="1"
                     align="right"
