@@ -65,6 +65,7 @@
                   small
                   class="mr-2"
                   @click="updateItem(item)"
+                  :disabled="item.modified"
                 >
                   mdi-update
                 </v-icon>
@@ -72,15 +73,30 @@
                   small
                   class="mr-2"
                   @click="downloadItem(item)"
+                  :disabled="item.modified"
                 >
                   mdi-download
                 </v-icon>
                 <v-icon
                   small
+                  class="mr-2"
                   @click="deleteItem(item)"
+                  :disabled="item.modified"
                 >
                   mdi-delete
                 </v-icon>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon
+                      v-show="item.modified"
+                      v-on="on"
+                      small
+                    >
+                      mdi-alert-outline
+                    </v-icon>
+                  </template>
+                  <span>Still in conversion process</span>
+                </v-tooltip>
               </template>
             </v-data-table>
           </v-card>
@@ -198,8 +214,12 @@ export default Vue.extend({
         // TODO pagination
         Axios.get(this.Globals.API_URL__YTDL_CONVERTER + '/info/tracks')
           .then(response => {
-            this.$store.commit("setApisAppsYoutubedlSongsData", response.data.data.tracks);
-            this.table.data = this.mapIntoTableData(response.data.data.tracks);
+            // TODO only update if data is different from before
+            const newTableData = this.mapIntoTableData(response.data.data.tracks);
+            if (JSON.stringify(this.getTableData) !== JSON.stringify(newTableData)) {
+              this.$store.commit("setApisAppsYoutubedlSongsData", response.data.data.tracks);
+              this.table.data = newTableData;
+            }
             this.table.isLoading = false;
           })
           .catch(error => {
@@ -309,6 +329,10 @@ export default Vue.extend({
     mounted: function() {
         this.loadTableData();
         this.updateNameFormattingField();
+
+        setInterval(() => {
+          this.loadTableData();
+        }, 60000)
     }
 });
 </script>
