@@ -18,6 +18,19 @@
             <Sheet title="Additional Information">
               <v-container>
                 <p class="font-weight-light">
+                  YouTubeDl / Songs
+                </p>
+                <v-text-field
+                        label="API Endpoint"
+                        :value="Globals.API_URL__YTDL_CONVERTER"
+                        disabled
+                />
+                <v-text-field
+                        label="Project Source"
+                        value="https://gitlab.com/0x6861636b657220/api-ytv-converter"
+                        disabled
+                />
+                <p class="font-weight-light">
                   YouTubeDl / Direct Link
                 </p>
                 <v-text-field
