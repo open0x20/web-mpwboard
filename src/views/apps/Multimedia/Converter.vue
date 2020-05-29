@@ -1,5 +1,5 @@
 <template>
-  <Sheet title="Songs">
+  <Sheet title="Converter">
     <v-dialog
       v-model="dialog"
       max-width="600px"
@@ -12,40 +12,57 @@
         justify="start"
       >
         <v-col
-          cols="8"
+          cols="12"
           class="pb-0"
         >
           <p class="font-weight-light">
-            List of mp3 files originally converted from internet videos.
-            Click on "Add" to queue a new video for processing.
+            A tool for video to mp3 conversion.
           </p>
         </v-col>
         <v-col
           cols="12"
-          align-self="end"
-          class="pb-0"
-        >
-          <v-row
-            no-gutters
-            justify="end"
-          >
-            <v-btn @click="dialog = true">
-              <v-icon
-                left
-              >
-                mdi-plus
-              </v-icon>
-              Add new title
-            </v-btn>
-          </v-row>
-        </v-col>
-        <v-col
-          cols="12"
-          class="mb-8"
+          class="mb-0"
         >
           <v-card>
             <v-card-title>
+              <v-container class="pa-0 ma-0">
+                <v-row no-gutters>
+                  <v-col>Songs</v-col>
+                  <v-col
+                    cols="1"
+                    align="right"
+                  >
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on }">
+                        <v-icon
+                          v-on="on"
+                          class="pr-2"
+                          @click="dialog = true"
+                        >
+                          mdi-plus
+                        </v-icon>
+                      </template>
+                      <span>Add New Track</span>
+                    </v-tooltip>
+                    <v-tooltip top>
+                      <template v-slot:activator="{ on }">
+                        <v-icon
+                          v-on="on"
+                          @click="loadTableData"
+                        >
+                          mdi-refresh
+                        </v-icon>
+                      </template>
+                      <span>Refresh Track List</span>
+                    </v-tooltip>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-title>
+            <v-divider />
+            <v-card-title class="pt-0">
               <v-text-field
+                class="font-weight-regular"
                 v-model="search"
                 append-icon="mdi-magnify"
                 label="Search"
@@ -103,72 +120,90 @@
         </v-col>
 
         <v-col
-          cols="3"
-          class="pt-0 mt-0"
-        >
-          <v-select
-            v-model="cmbArtists"
-            :items="['1 - One Artist','2 - Few Artists','3 - All Artists']"
-            @change="updateNameFormattingField"
-            filled
-            dense
-            hide-details
-            class="pb-0 mb-0"
-          />
-        </v-col>
-        <v-col
-          cols="3"
-          class="pt-0 mt-0"
-        >
-          <v-select
-            v-model="cmbFeaturings"
-            :items="['1 - None','2 - One Feat. Artist','3 - Few Feat. Artists','4 - All Feat. Artists']"
-            @change="updateNameFormattingField"
-            filled
-            dense
-            hide-details
-            class="pb-0 mb-0"
-          />
-        </v-col>
-        <v-col
-          cols="3"
-          class="pt-0 mt-0"
-        >
-          <v-select
-            v-model="cmbFeaturingStyle"
-            :items="['1 - ft.','2 - feat.']"
-            @change="updateNameFormattingField"
-            filled
-            dense
-            hide-details
-            class="pb-0 mb-0"
-          />
-        </v-col>
-        <v-col
-          cols="3"
-          class="pt-0 mt-0"
-        >
-          <v-select
-            v-model="cmbOrientation"
-            :items="['1 - Artists/Title', '2 - Title/Artists']"
-            @change="updateNameFormattingField"
-            filled
-            dense
-            hide-details
-            class="pb-0 mb-0"
-          />
-        </v-col>
-        <v-col 
           cols="12"
-          class="pt-0 mt-0"
+          class="pb-0"
         >
-          <v-text-field
-            v-model="inputFormat"
-            block
-            filled
-            dense
-            disabled
-          />
+          <v-card>
+            <v-card-title
+              class="font-weight-medium"
+            >
+              Download format settings
+            </v-card-title>
+            <v-divider />
+            <v-container>
+              <v-row>
+                <v-col
+                  cols="3"
+                  class="pt-0 mt-0"
+                >
+                  <v-select
+                    v-model="cmbArtists"
+                    :items="['1 - One Artist','2 - Few Artists','3 - All Artists']"
+                    @change="updateNameFormattingField"
+                    filled
+                    dense
+                    hide-details
+                    class="pb-0 mb-0"
+                  />
+                </v-col>
+                <v-col
+                  cols="3"
+                  class="pt-0 mt-0"
+                >
+                  <v-select
+                    v-model="cmbFeaturings"
+                    :items="['1 - None','2 - One Feat. Artist','3 - Few Feat. Artists','4 - All Feat. Artists']"
+                    @change="updateNameFormattingField"
+                    filled
+                    dense
+                    hide-details
+                    class="pb-0 mb-0"
+                  />
+                </v-col>
+                <v-col
+                  cols="3"
+                  class="pt-0 mt-0"
+                >
+                  <v-select
+                    v-model="cmbFeaturingStyle"
+                    :items="['1 - ft.','2 - feat.']"
+                    @change="updateNameFormattingField"
+                    filled
+                    dense
+                    hide-details
+                    class="pb-0 mb-0"
+                  />
+                </v-col>
+                <v-col
+                  cols="3"
+                  class="pt-0 mt-0"
+                >
+                  <v-select
+                    v-model="cmbOrientation"
+                    :items="['1 - Artists/Title', '2 - Title/Artists']"
+                    @change="updateNameFormattingField"
+                    filled
+                    dense
+                    hide-details
+                    class="pb-0 mb-0"
+                  />
+                </v-col>
+                <v-col
+                  cols="12"
+                  class="pt-0 mt-0"
+                >
+                  <v-text-field
+                    v-model="inputFormat"
+                    block
+                    filled
+                    dense
+                    disabled
+                    hide-details
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -179,7 +214,7 @@
 import Vue from "vue";
 import Globals from "@/globals";
 import Sheet from "@/components/Sheet.vue";
-import EditTitle from "@/views/apps/YouTubeDl/EditTitle.vue";
+import EditTitle from "@/views/apps/Multimedia/EditTitle.vue";
 import {mapGetters} from "vuex";
 import Axios from "axios";
 

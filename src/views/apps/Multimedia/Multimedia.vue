@@ -7,14 +7,14 @@
       >
         <v-col cols="12">
           <h2 class="title">
-            YouTube-Downloader
+            Multimedia
           </h2>
           <p class="font-weight-light">
-            A tool to download, convert and manage internet videos.
+            A place where you can download, convert and manage multimedia content.
           </p>
         </v-col>
         <v-col cols="12">
-          <Songs />
+          <Converter />
         </v-col>
         <v-col cols="12">
           <DirectLinkExtractor />
@@ -26,14 +26,14 @@
 
 <script>
 import Vue from "vue";
-import DirectLinkExtractor from "@/views/apps/YouTubeDl/DirectLinkExtractor";
-import Songs from "@/views/apps/YouTubeDl/Songs";
+import DirectLinkExtractor from "@/views/apps/Multimedia/DirectLinkExtractor";
+import Converter from "@/views/apps/Multimedia/Converter";
 import Axios from "axios";
 import Globals from "@/globals";
 
 export default Vue.extend({
-  name: "YouTubeDL",
-  components: { DirectLinkExtractor, Songs },
+  name: "Multimedia",
+  components: { DirectLinkExtractor, Converter },
   data: () => ({
     Globals: Globals
   }),
