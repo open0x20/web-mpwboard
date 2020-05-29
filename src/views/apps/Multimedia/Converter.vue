@@ -76,6 +76,8 @@
               :loading="table.isLoading"
               :headers="table.headers"
               :items="table.data"
+              :sort-by="['trackId']"
+              :sort-desc="[true]"
               :search="search"
               :footer-props="{
                 itemsPerPageOptions: [15,50,100,-1]
