@@ -16,7 +16,12 @@ export default new Vuex.Store({
     },
     views: {
       youtubedl: {
-        directLinkInputValue: ""
+        player: {
+          track: {},
+          progress: 0,
+          isPlaying: false,
+        },
+        directLinkInputValue: "",
       }
     }
   },
@@ -32,6 +37,15 @@ export default new Vuex.Store({
     },
     getApisAppsYoutubedlArtistsData(state) {
       return state.apis.apps.youtubedl.artistsData;
+    },
+    getViewsYoutubedlPlayerTrack(state) {
+      return state.views.youtubedl.player.track;
+    },
+    getViewsYoutubedlPlayerProgress(state) {
+      return state.views.youtubedl.player.progress;
+    },
+    getViewsYoutubedlPlayerIsPlaying(state) {
+      return state.views.youtubedl.player.isPlaying;
     }
   },
   mutations: {
@@ -46,6 +60,15 @@ export default new Vuex.Store({
     },
     setApisAppsYoutubedlArtistsData(state, value) {
       state.apis.apps.youtubedl.artistsData = value;
+    },
+    setViewsYoutubedlPlayerTrack(state, value) {
+      state.views.youtubedl.player.track = value;
+    },
+    setViewsYoutubedlPlayerProgress(state, value) {
+      state.views.youtubedl.player.progress = value;
+    },
+    setViewsYoutubedlPlayerIsPlaying(state, value) {
+      state.views.youtubedl.player.isPlaying = value;
     }
   },
   actions: {},

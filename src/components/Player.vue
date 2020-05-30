@@ -20,7 +20,7 @@
             class="mr-2"
           >
             <v-img
-              src="https://i1.sndcdn.com/artworks-000062402673-f2f2f7-t500x500.jpg"
+              :src="this.imgCover"
               min-height="85"
               max-height="85"
               min-width="85"
@@ -36,10 +36,10 @@
             >
               <v-col>
                 <p class="font-weight-regular white--text ma-0">
-                  Electricity
+                  {{ this.lblTitle }}
                 </p>
                 <p class="font-weight-light caption white--text ma-0">
-                  Silk City, Dua Lipa ft. Diplo, Mark Ronson
+                  {{ this.lblArtists }}
                 </p>
               </v-col>
             </v-row>
@@ -87,9 +87,11 @@
               x-large
               color="white"
               @click="mediaPlayerClickPlay"
+              :loading="this.btnPlay.loading"
+              :disabled="this.btnPlay.disabled"
             >
               <v-icon>
-                {{ this.btnPlay ? 'mdi-play' : 'mdi-pause' }}
+                {{ this.btnPlay.isPlayIcon ? 'mdi-play' : 'mdi-pause' }}
               </v-icon>
             </v-btn>
             <v-btn
@@ -121,6 +123,12 @@
             <v-slider
               color="white"
               hide-details
+              v-model="slider.value"
+              :min="this.slider.min"
+              :max="this.slider.max"
+              @click="mediaPlayerClickSlider"
+              @start="sliderStartDragging"
+              @end="sliderStopDragging"
             />
           </v-col>
         </v-row>
@@ -131,18 +139,44 @@
 
 <script lang="ts">
 import Vue from "vue";
+import Globals from "@/globals";
+import {Howl, Howler} from "howler";
+import {mapGetters} from "vuex";
 
 export default Vue.extend({
   name: "Player",
   data: () => ({
-    btnPlay: true,
+    Globals: Globals,
+    sound: {} as Howl,
+    imgCover: "",
+    lblTitle: "No title",
+    lblArtists: "No artists",
+    btnPlay: {
+      isPlayIcon: true,
+      loading: false,
+      disabled: false
+    },
+    slider: {
+      min: 0,
+      max: 100,
+      value: 0,
+      intervalId: -1,
+    },
   }),
   methods: {
     mediaPlayerClickPrevious: function() {
       //
     },
     mediaPlayerClickPlay: function() {
-      this.btnPlay = !this.btnPlay;
+      this.btnPlay.isPlayIcon = !this.btnPlay.isPlayIcon;
+      if (!this.btnPlay.isPlayIcon) {
+        this.sound.play();
+        this.mediaPlayerStartTrackingProgression();
+      } else {
+        this.sound.pause();
+        this.mediaPlayerStopTrackingProgression();
+      }
+
     },
     mediaPlayerClickNext: function() {
       //
@@ -153,7 +187,79 @@ export default Vue.extend({
     mediaPlayerClickVolume: function() {
       //
     },
-  }
+    mediaPlayerClickSlider: function() {
+      console.log("Player: Jump to " + this.slider.value + " sec");
+      this.mediaPlayerStopTrackingProgression();
+      this.sound.seek(this.slider.value);
+      this.mediaPlayerStartTrackingProgression();
+    },
+    sliderStartDragging: function() {
+      if (this.slider.intervalId !== -1) {
+        this.mediaPlayerStopTrackingProgression();
+      }
+    },
+    sliderStopDragging: function() {
+      this.mediaPlayerStartTrackingProgression();
+    },
+    mediaPlayerStartTrackingProgression: function() {
+      this.slider.intervalId = setInterval(() => {
+        this.slider.value = this.sound.seek();
+      }, 1000);
+    },
+    mediaPlayerStopTrackingProgression: function() {
+      if (this.slider.intervalId !== -1) {
+        clearInterval(this.slider.intervalId);
+      }
+    },
+  },
+  mounted() {
+    //
+  },
+  computed: {
+    ...mapGetters({
+      getPlayerTrack: "getViewsYoutubedlPlayerTrack"
+    })
+  },
+  watch: {
+    getPlayerTrack: function (newValue) {
+      // Clear previous
+      if (this.slider.intervalId !== -1) {
+        clearInterval(this.slider.intervalId);
+      }
+
+      // Load new song
+      this.btnPlay.loading = true;
+      this.sound = new Howl({
+        src: [Globals.API_URL__YTDL_CONVERTER + "/stream/" + newValue.trackId + "?name=player"],
+        format: ["mp3"]
+      });
+      this.imgCover = newValue.urlCover;
+      this.lblTitle = newValue.title;
+      this.lblArtists = newValue.artists.join(", ");
+
+      // Play new song upon being loaded
+      this.sound.once("load", () => {
+        this.btnPlay.loading = false;
+        //this.btnPlay.disabled = false;
+        this.btnPlay.isPlayIcon = false;
+        this.sound.play();
+        this.slider.min = 0;
+        this.slider.max = this.sound.duration();
+        this.slider.value = 0;
+        this.slider.intervalId = setInterval(() => {
+          this.slider.value = this.sound.seek();
+        }, 1000);
+        this.sound.once("end", () => {
+          clearInterval(this.slider.intervalId);
+          this.btnPlay.isPlayIcon = true;
+          this.slider.value = 0;
+          this.sound.stop();
+          this.sound.seek(0);
+        });
+      });
+
+    }
+  },
 });
 </script>
 

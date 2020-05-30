@@ -95,6 +95,14 @@
                 <v-icon
                   small
                   class="mr-2"
+                  @click="actionBtnPlay(item)"
+                  :disabled="item.modified"
+                >
+                  mdi-play
+                </v-icon>
+                <v-icon
+                  small
+                  class="mr-2"
                   @click="actionBtnUpdate(item)"
                   :disabled="item.modified"
                 >
@@ -329,6 +337,10 @@ export default Vue.extend({
                 .catch(error => {
                   console.log(error);
                 });
+      },
+      actionBtnPlay: function(item) {
+        console.log("Playing item " + item.trackId);
+        this.$store.commit("setViewsYoutubedlPlayerTrack", item);
       },
       onFormatterUpdate: function() {
         this.formatter.text = TitleHelper.getFormattedTitleByMetadata(
