@@ -8,8 +8,8 @@
       <v-col
         cols="12"
         md="4"
-        lg="4"
-        xl="4"
+        lg="3"
+        xl="2"
       >
         <v-row
           no-gutters
@@ -21,10 +21,10 @@
           >
             <v-img
               :src="this.imgCover"
-              min-height="85"
-              max-height="85"
-              min-width="85"
-              max-width="85"
+              min-height="95"
+              max-height="95"
+              min-width="95"
+              max-width="95"
               class="player-border-radius-4 player-img-holder"
             />
           </v-col>
@@ -118,7 +118,7 @@
           </v-col>
           <v-col
             cols="12"
-            class="pt-0"
+            class="pt-0 pr-6 pl-6"
           >
             <v-slider
               color="white"
@@ -129,7 +129,18 @@
               @click="mediaPlayerClickSlider"
               @start="sliderStartDragging"
               @end="sliderStopDragging"
-            />
+            >
+              <template v-slot:prepend>
+                <p class="ma-0 mt-1 pr-2 player-timer">
+                  {{ formatAsTime(slider.value) }}
+                </p>
+              </template>
+              <template v-slot:append>
+                <p class="ma-0 mt-1 pl-2 player-timer">
+                  {{ formatAsTime(slider.max) }}
+                </p>
+              </template>
+            </v-slider>
           </v-col>
         </v-row>
       </v-col>
@@ -158,7 +169,7 @@ export default Vue.extend({
     },
     slider: {
       min: 0,
-      max: 100,
+      max: 260,
       value: 0,
       intervalId: -1,
     },
@@ -214,6 +225,16 @@ export default Vue.extend({
         clearInterval(this.slider.intervalId);
       }
     },
+    formatAsTime: function(value: number) {
+      const minutes = Math.floor(value / 60);
+      const seconds = Math.floor(value - (minutes * 60));
+
+      if (seconds < 10) {
+        return minutes + ":0" + seconds;
+      } else {
+        return minutes + ":" + seconds;
+      }
+    }
   },
   mounted() {
     //
@@ -227,6 +248,9 @@ export default Vue.extend({
     getPlayerTrack: function (newValue) {
       // Clear previous
       this.mediaPlayerStopTrackingProgression();
+      if (this.slider.intervalId !== -1) {
+        this.sound.stop();
+      }
 
       // Load new song
       this.btnPlay.loading = true;
@@ -271,5 +295,8 @@ export default Vue.extend({
   }
   .player-border-radius-4 {
     border-radius: 16px 4px 4px 4px;
+  }
+  .player-timer {
+    color: rgba(255, 211, 100, 0.90);
   }
 </style>
