@@ -233,16 +233,27 @@
                 align="stretch"
               >
                 <!-- Media Player - Metadata --->
-                <v-col cols="12" md="4" lg="4" xl="4">
-                  <v-row no-gutters justify="center">
-                    <v-col cols="auto" class="mr-2">
+                <v-col
+                  cols="12"
+                  md="4"
+                  lg="4"
+                  xl="4"
+                >
+                  <v-row
+                    no-gutters
+                    justify="center"
+                  >
+                    <v-col
+                      cols="auto"
+                      class="mr-2"
+                    >
                       <v-img
-                              src="https://i1.sndcdn.com/artworks-000062402673-f2f2f7-t500x500.jpg"
-                              min-height="75"
-                              max-height="75"
-                              min-width="75"
-                              max-width="75"
-                              class="border-radius-4 player-img-holder"
+                        src="https://i1.sndcdn.com/artworks-000062402673-f2f2f7-t500x500.jpg"
+                        min-height="75"
+                        max-height="75"
+                        min-width="75"
+                        max-width="75"
+                        class="border-radius-4 player-img-holder"
                       />
                     </v-col>
                     <v-col>
@@ -256,7 +267,12 @@
                   </v-row>
                 </v-col>
                 <!-- Media Player - Main Controls --->
-                <v-col cols="12" md="8" lg="8" xl="8">
+                <v-col
+                  cols="12"
+                  md="8"
+                  lg="8"
+                  xl="8"
+                >
                   <v-row
                     no-gutters
                   >
@@ -266,10 +282,10 @@
                       class="pt-2"
                     >
                       <v-icon
-                              class="pr-10"
-                              color="white"
-                              small
-                              @click="mediaPlayerClickLoop"
+                        class="pr-10"
+                        color="white"
+                        small
+                        @click="mediaPlayerClickLoop"
                       >
                         mdi-shuffle-variant
                       </v-icon>
@@ -298,9 +314,9 @@
                         mdi-skip-forward
                       </v-icon>
                       <v-icon
-                              color="white"
-                              small
-                              @click="mediaPlayerClickVolume"
+                        color="white"
+                        small
+                        @click="mediaPlayerClickVolume"
                       >
                         mdi-volume-high
                       </v-icon>
@@ -407,7 +423,7 @@ export default Vue.extend({
       downloadItem: function(item) {
         const title = this.getFormattedTitleByMetadata(item.artists, item.featuring, item.title);
         console.log("Downloading item " + item.trackId + " with title: " + title);
-        window.open(this.Globals.API_URL__YTDL_CONVERTER + "/stream/" + item.trackId + "?name=" + encodeURIComponent(title));
+        window.open(this.Globals.API_URL__YTDL_CONVERTER + "/stream/" + item.trackId + "?name=" + encodeURIComponent(title), "_self");
       },
       deleteItem: function(item) {
         console.log("Deleting item " + item.trackId);
