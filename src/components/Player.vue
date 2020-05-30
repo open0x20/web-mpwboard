@@ -104,17 +104,35 @@
                 mdi-skip-forward
               </v-icon>
             </v-btn>
-            <v-btn
-              class="ml-10"
-              icon
-              x-small
-              color="white"
-              @click="mediaPlayerClickVolume"
+            <v-menu
+              class="player-volume"
+              top
+              offset-y
+              :close-on-content-click="false"
             >
-              <v-icon>
-                mdi-volume-high
-              </v-icon>
-            </v-btn>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  class="ml-10"
+                  icon
+                  x-small
+                  color="white"
+                  v-on="on"
+                >
+                  <v-icon>
+                    mdi-volume-high
+                  </v-icon>
+                </v-btn>
+              </template>
+              <v-container class="player-volume">
+                <v-slider
+                  vertical
+                  v-model="volume"
+                  min="0"
+                  max="100"
+                  @change="mediaPlayerChangeVolume"
+                />
+              </v-container>
+            </v-menu>
           </v-col>
           <v-col
             cols="12"
@@ -167,6 +185,7 @@ export default Vue.extend({
       loading: false,
       disabled: false
     },
+    volume: 100,
     slider: {
       min: 0,
       max: 260,
@@ -195,8 +214,8 @@ export default Vue.extend({
     mediaPlayerClickLoop: function() {
       //
     },
-    mediaPlayerClickVolume: function() {
-      //
+    mediaPlayerChangeVolume: function() {
+      this.sound.volume(this.volume / 100.0);
     },
     mediaPlayerClickSlider: function() {
       console.log("Player: Jump to " + this.slider.value + " sec");
@@ -258,6 +277,8 @@ export default Vue.extend({
         src: [Globals.API_URL__YTDL_CONVERTER + "/stream/" + newValue.trackId + "?name=player"],
         format: ["mp3"]
       });
+
+      // Load Metadata stuff
       this.imgCover = newValue.urlCover;
       this.lblTitle = newValue.title;
       this.lblArtists = newValue.artists.join(", ");
@@ -301,5 +322,8 @@ export default Vue.extend({
   }
   .player-timer {
     color: rgba(255, 211, 100, 0.90);
+  }
+  .player-volume {
+    background-color: rgba(255, 255, 255, 0.80);
   }
 </style>
