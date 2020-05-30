@@ -325,13 +325,13 @@ export default Vue.extend({
                 });
       },
       clickBtnFindCover: function() {
-        // Prepare title for search
+        // Prepare title for searchInput
         let title = TitleHelper.removeUnregularTitleSideCharacters(TitleHelper.removeCommonPhrasesFromTitle(this.originalTitle));
         if (title.length === 0) {
           title = this.inputTitle;
         }
 
-        // Open image search in new tab
+        // Open image searchInput in new tab
         window.open(
           'https://duckduckgo.com/?q=' + title + '+album+cover&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
           '_blank'

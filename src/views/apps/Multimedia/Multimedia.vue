@@ -10,14 +10,25 @@
           <h1 class="display-1">
             Multimedia
           </h1>
-          <v-divider></v-divider>
+          <v-divider />
           <p class="font-weight-light font-italic pt-2">
             A place where you can download, convert and manage multimedia content.
           </p>
         </v-col>
+
+        <!-- Audio Player -->
+        <v-col>
+          <v-card shaped>
+            <Player />
+          </v-card>
+        </v-col>
+
+        <!-- Converter -->
         <v-col cols="12">
           <Converter />
         </v-col>
+
+        <!-- Direct Link Extractor -->
         <v-col cols="12">
           <DirectLinkExtractor />
         </v-col>
@@ -28,6 +39,7 @@
 
 <script>
 import Vue from "vue";
+import Player from "@/components/Player.vue";
 import DirectLinkExtractor from "@/views/apps/Multimedia/DirectLinkExtractor";
 import Converter from "@/views/apps/Multimedia/Converter";
 import Axios from "axios";
@@ -35,7 +47,7 @@ import Globals from "@/globals";
 
 export default Vue.extend({
   name: "Multimedia",
-  components: { DirectLinkExtractor, Converter },
+  components: { DirectLinkExtractor, Converter, Player },
   data: () => ({
     Globals: Globals
   }),

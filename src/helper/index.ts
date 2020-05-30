@@ -201,4 +201,45 @@ export default class TitleHelper {
 			return data.title;
 		}
 	}
+
+	public static getFormattedTitleByMetadata(options: number[], artists: string[], featuringArtists: string[], title: string) {
+		// Artists
+		let artistsStr = artists[0];
+		if (options[0] === 2) {
+			const length = (artists.length < 3) ? artists.length : 3;
+			const artistsSlice = artists.slice(0, length);
+			artistsStr = artistsSlice.join(', ');
+		} else if (options[0] === 3) {
+			artistsStr = artists.join(', ');
+		}
+
+		// Featuring Artists
+		let featuringArtistsStr = '';
+		if (options[1] === 2) {
+			featuringArtistsStr = featuringArtists[0];
+		} else if (options[1] === 3) {
+			const length = (featuringArtists.length < 3) ? featuringArtists.length : 3;
+			const artistsSlice = featuringArtists.slice(0, length);
+			featuringArtistsStr = artistsSlice.join(', ');
+		} else if (options[1] === 4) {
+			featuringArtistsStr = featuringArtists.join(', ');
+		}
+
+		if (featuringArtists.length > 0 && options[1] !== 1) {
+			if (options[2] === 1) {
+				featuringArtistsStr = ' ft. ' + featuringArtistsStr;
+			} else {
+				featuringArtistsStr = ' feat. ' + featuringArtistsStr;
+			}
+		} else {
+			featuringArtistsStr = '';
+		}
+
+		// Orientation
+		if (options[3] === 1) {
+			return artistsStr + featuringArtistsStr + ' - ' + title;
+		} else {
+			return title + ' - ' + artistsStr + featuringArtistsStr;
+		}
+	}
 }
