@@ -226,9 +226,7 @@ export default Vue.extend({
   watch: {
     getPlayerTrack: function (newValue) {
       // Clear previous
-      if (this.slider.intervalId !== -1) {
-        clearInterval(this.slider.intervalId);
-      }
+      this.mediaPlayerStopTrackingProgression();
 
       // Load new song
       this.btnPlay.loading = true;
@@ -249,9 +247,7 @@ export default Vue.extend({
         this.slider.min = 0;
         this.slider.max = this.sound.duration();
         this.slider.value = 0;
-        this.slider.intervalId = setInterval(() => {
-          this.slider.value = this.sound.seek();
-        }, 1000);
+        this.mediaPlayerStartTrackingProgression();
         this.sound.once("end", () => {
           clearInterval(this.slider.intervalId);
           this.btnPlay.isPlayIcon = true;
