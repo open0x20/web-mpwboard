@@ -261,6 +261,9 @@ export default Vue.extend({
       this.imgCover = newValue.urlCover;
       this.lblTitle = newValue.title;
       this.lblArtists = newValue.artists.join(", ");
+      if (newValue.featuring.length > 0) {
+        this.lblArtists += " ft. " + newValue.featuring.join(", ");
+      }
 
       // Play new song upon being loaded
       this.sound.once("load", () => {
