@@ -203,7 +203,10 @@ export default Vue.extend({
     },
     mediaPlayerStartTrackingProgression: function() {
       this.slider.intervalId = setInterval(() => {
-        this.slider.value = this.sound.seek();
+        const position = this.sound.seek();
+        if (typeof position === "number") {
+          this.slider.value = position;
+        }
       }, 1000);
     },
     mediaPlayerStopTrackingProgression: function() {
