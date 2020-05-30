@@ -62,7 +62,7 @@
             class="pt-0"
           >
             <v-btn
-              class="mr-10"
+              class="mr-8"
               icon
               x-small
               color="white"
@@ -73,8 +73,9 @@
               </v-icon>
             </v-btn>
             <v-btn
+              class="mr-2"
               icon
-              x-large
+              large
               color="white"
               @click="mediaPlayerClickPrevious"
             >
@@ -84,6 +85,7 @@
             </v-btn>
             <v-btn
               icon
+              outlined
               x-large
               color="white"
               @click="mediaPlayerClickPlay"
@@ -95,8 +97,9 @@
               </v-icon>
             </v-btn>
             <v-btn
+              class="ml-2"
               icon
-              x-large
+              large
               color="white"
               @click="mediaPlayerClickNext"
             >
@@ -112,7 +115,7 @@
             >
               <template v-slot:activator="{ on }">
                 <v-btn
-                  class="ml-10"
+                  class="ml-8"
                   icon
                   x-small
                   color="white"
@@ -123,15 +126,18 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <v-container class="player-volume">
-                <v-slider
-                  vertical
-                  v-model="volume"
-                  min="0"
-                  max="100"
-                  @change="mediaPlayerChangeVolume"
-                />
-              </v-container>
+              <v-row class="player-volume">
+                <v-col class="pt-0 pb-0">
+                  <v-slider
+                    class="mt-0 mb-0"
+                    vertical
+                    v-model="volume"
+                    min="0"
+                    max="100"
+                    @change="mediaPlayerChangeVolume"
+                  />
+                </v-col>
+              </v-row>
             </v-menu>
           </v-col>
           <v-col
