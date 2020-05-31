@@ -339,10 +339,12 @@ export default Vue.extend({
                 });
       },
       actionBtnPlay: function(item) {
+        if (JSON.stringify(item) === JSON.stringify(this.playerTrack)) {
+          return;
+        }
         console.log("Playing item " + item.trackId);
         this.$store.commit("setViewsYoutubedlPlayerTrack", item);
         this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "start"});
-        //window.scrollTo(0,0);
       },
       onFormatterUpdate: function() {
         this.formatter.text = TitleHelper.getFormattedTitleByMetadata(
@@ -358,6 +360,7 @@ export default Vue.extend({
         ...mapGetters({
           getTableData: "getApisAppsYoutubedlSongsData",
           playerEvent: "getViewsYoutubedlPlayerEvent",
+          playerTrack: "getViewsYoutubedlPlayerTrack",
         })
     },
     mounted: function() {

@@ -86,8 +86,13 @@
         </v-menu-->
       </v-col>
       <v-col
-      class="font-weight-light white--text pt-0 pb-0">
-        <marquee> <b>{{ playerMetadataTitle }}</b>{{ " - " + playerMetadataArtists }}</marquee>
+      class="pt-0 pb-0 white--text">
+        <marquee-text :duration="4" :repeat="4" :paused="marqueePaused">
+          <p class="mr-12">
+            <b>{{ playerMetadataTitle }}</b>
+            {{ " - " + playerMetadataArtists}}
+          </p>
+        </marquee-text>
       </v-col>
     </v-row>
   </v-container>
@@ -98,9 +103,11 @@ import Vue from "vue";
 import Globals from "@/globals";
 import {Howl, Howler} from "howler";
 import {mapGetters} from "vuex";
+import MarqueeText from 'vue-marquee-text-component';
 
 export default Vue.extend({
   name: "Player",
+  components: { MarqueeText },
   data: () => ({
     Globals: Globals,
     sound: {} as Howl,
@@ -112,6 +119,7 @@ export default Vue.extend({
       loading: false,
       disabled: false
     },
+    marqueePaused: true,
     volume: 100,
     slider: {
       min: 0,
@@ -162,15 +170,18 @@ export default Vue.extend({
       this.btnPlay.isPlayIcon = true;
       this.btnPlay.loading = true;
       this.slider.value = 0;
+      this.marqueePaused = true;
     },
     onPlayerPlayEvent: function() {
       this.slider.max = this.playerMetadataDuration;
       this.btnPlay.loading = false;
       this.btnPlay.isPlayIcon = false;
+      this.marqueePaused = false;
       this.mediaPlayerStartTrackingProgression();
     },
     onPlayerPauseEvent: function() {
       this.btnPlay.isPlayIcon = true;
+      this.marqueePaused = true;
       this.mediaPlayerStopTrackingProgression();
     },
     onPlayerVolumeEvent: function() {
@@ -182,6 +193,7 @@ export default Vue.extend({
     onPlayerResetEvent: function() {
       this.btnPlay.isPlayIcon = true;
       this.slider.value = 0;
+      this.marqueePaused = true;
       this.mediaPlayerStopTrackingProgression();
     }
   },
@@ -235,5 +247,8 @@ export default Vue.extend({
   }
   .mini-player-volume {
     background-color: rgba(255, 255, 255, 0.80);
+  }
+  .wide {
+    width: 20px;
   }
 </style>
