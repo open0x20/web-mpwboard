@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div />
 </template>
 
 <script lang="ts">
@@ -16,37 +16,41 @@ export default Vue.extend({
   methods: {
     onPlayerStartEvent: function() {
       // Clear previous
-      if (this.playerLoaded) {
-        this.playerSound.stop();
+      if (this.playerState.loaded) {
+        this.playerState.sound.stop();
       } else {
-        this.$store.commit("setViewsYoutubedlPlayerLoaded", true);
+        this.$store.commit("setSharedPlayerState", {...this.playerState, loaded: true});
       }
 
       // Load new song
-      this.$store.commit("setViewsYoutubedlPlayerSound", new Howl({
-        src: [Globals.API_URL__YTDL_CONVERTER + "/stream/" + this.playerTrack.trackId + "?name=player"],
+      const sound = new Howl({
+        src: [Globals.API_URL__YTDL_CONVERTER + "/stream/" + this.playerState.track.trackId + "?name=player"],
         format: ["mp3"]
-      }));
-      this.playerSound.volume(this.playerVolume / 100);
+      });
+      this.$store.commit("setSharedPlayerState", {...this.playerState, sound: sound});
+      this.playerState.sound.volume(this.playerState.volume / 100);
 
       // Load Metadata stuff
-      this.$store.commit("setViewsYoutubedlPlayerMetadataTitle", this.playerTrack.title);
-      this.$store.commit("setViewsYoutubedlPlayerMetadataImg", this.playerTrack.urlCover);
-      let artists = this.playerTrack.artists.join(", ");
-      if (this.playerTrack.featuring.length > 0) {
-        artists += " ft. " + this.playerTrack.featuring.join(", ");
+      let artists = this.playerState.track.artists.join(", ");
+      if (this.playerState.track.featuring.length > 0) {
+        artists += " ft. " + this.playerState.track.featuring.join(", ");
       }
-      this.$store.commit("setViewsYoutubedlPlayerMetadataArtists", artists);
+      this.$store.commit("setSharedPlayerMetadata", {
+        ...this.playerMetadata,
+        title: this.playerState.track.title,
+        artists: artists,
+        img: this.playerState.track.urlCover
+      });
 
       // Play new song upon being loaded
-      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "load"});
-      this.playerSound.once("load", () => {
+      this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "load"});
+      this.playerState.sound.once("load", () => {
         //this.btnPlay.loading = false;
-        this.$store.commit("setViewsYoutubedlPlayerMetadataDuration", this.playerSound.duration());
-        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "play"});
-        this.playerSound.play();
-        this.playerSound.once("end", () => {
-          this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "reset"});
+        this.$store.commit("setSharedPlayerMetadata", {...this.playerMetadata, duration: this.playerState.sound.duration()});
+        this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "play"});
+        this.playerState.sound.play();
+        this.playerState.sound.once("end", () => {
+          this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "reset"});
         });
       });
     },
@@ -56,11 +60,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      playerEvent: "getViewsYoutubedlPlayerEvent",
-      playerSound: "getViewsYoutubedlPlayerSound",
-      playerVolume: "getViewsYoutubedlPlayerVolume",
-      playerTrack: "getViewsYoutubedlPlayerTrack",
-      playerLoaded: "getViewsYoutubedlPlayerLoaded",
+      playerEvent: "getSharedPlayerEvent",
+      playerState: "getSharedPlayerState",
+      playerMetadata: "getSharedPlayerMetadata"
     })
   },
   watch: {

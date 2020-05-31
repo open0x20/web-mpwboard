@@ -20,7 +20,7 @@
             class="mr-2"
           >
             <v-img
-              :src="playerMetadataImg"
+              :src="playerMetadata.img"
               min-height="95"
               max-height="95"
               min-width="95"
@@ -36,10 +36,10 @@
             >
               <v-col>
                 <p class="font-weight-regular white--text ma-0">
-                  {{ playerMetadataTitle }}
+                  {{ playerMetadata.title }}
                 </p>
                 <p class="font-weight-light caption white--text ma-0">
-                  {{ playerMetadataArtists }}
+                  {{ playerMetadata.artists }}
                 </p>
               </v-col>
             </v-row>
@@ -127,7 +127,7 @@
                 </v-btn>
               </template>
               <v-row class="player-volume">
-                <v-col class="pt-0 pb-0">
+                <v-col class="pa-1">
                   <v-slider
                     class="mt-0 mb-0"
                     vertical
@@ -197,33 +197,33 @@ export default Vue.extend({
   }),
   methods: {
     mediaPlayerClickPrevious: function() {
-      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "previous"});
+      this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "previous"});
     },
     mediaPlayerClickPlay: function() {
       if (this.btnPlay.isPlayIcon) {
-        this.playerSound.play()
-        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "play"});
+        this.playerState.sound.play()
+        this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "play"});
       } else {
-        this.playerSound.pause()
-        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "pause"});
+        this.playerState.sound.pause()
+        this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "pause"});
       }
 
     },
     mediaPlayerClickNext: function() {
-      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "next"});
+      this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "next"});
     },
     mediaPlayerClickLoop: function() {
-      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "loop"});
+      this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "loop"});
     },
     mediaPlayerChangeVolume: function() {
-      this.playerSound.volume(this.sliderVolume / 100.0);
-      this.$store.commit("setViewsYoutubedlPlayerVolume", (this.sliderVolume));
-      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "volume"});
+      this.playerState.sound.volume(this.sliderVolume / 100.0);
+      this.$store.commit("setSharedPlayerState", {...this.playerState, volume: this.sliderVolume});
+      this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "volume"});
     },
     mediaPlayerClickSlider: function() {
       console.log("Player: Jump to " + this.slider.value + " sec");
       this.mediaPlayerStopTrackingProgression();
-      this.playerSound.seek(this.slider.value);
+      this.playerState.sound.seek(this.slider.value);
       this.mediaPlayerStartTrackingProgression();
     },
     sliderStartDragging: function() {
@@ -236,7 +236,7 @@ export default Vue.extend({
     },
     mediaPlayerStartTrackingProgression: function() {
       this.slider.intervalId = setInterval(() => {
-        const position = this.playerSound.seek();
+        const position = this.playerState.sound.seek();
         if (typeof position === "number") {
           this.slider.value = position;
         }
@@ -263,7 +263,7 @@ export default Vue.extend({
       this.slider.value = 0;
     },
     onPlayerPlayEvent: function() {
-      this.slider.max = this.playerMetadataDuration;
+      this.slider.max = this.playerMetadata.duration;
       this.btnPlay.loading = false;
       this.btnPlay.isPlayIcon = false;
       this.mediaPlayerStartTrackingProgression();
@@ -273,10 +273,10 @@ export default Vue.extend({
       this.mediaPlayerStopTrackingProgression();
     },
     onPlayerVolumeEvent: function() {
-      this.sliderVolume =  this.playerVolume;
+      this.sliderVolume =  this.playerState.volume;
     },
     onPlayerSeekEvent: function() {
-      this.slider.value = this.playerSeek;
+      this.slider.value = this.playerState.seek;
     },
     onPlayerResetEvent: function() {
       this.btnPlay.isPlayIcon = true;
@@ -285,11 +285,11 @@ export default Vue.extend({
     }
   },
   mounted() {
-    if (this.playerLoaded) {
-      this.sliderVolume =  this.playerVolume;
-      this.slider.value = this.playerSound.seek();
-      this.slider.max = this.playerMetadataDuration;
-      if (this.playerSound.playing()) {
+    if (this.playerState.loaded) {
+      this.sliderVolume =  this.playerState.volume;
+      this.slider.value = this.playerState.sound.seek();
+      this.slider.max = this.playerMetadata.duration;
+      if (this.playerState.sound.playing()) {
         this.onPlayerPlayEvent();
       }
     }
@@ -300,16 +300,9 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      getPlayerTrack: "getViewsYoutubedlPlayerTrack",
-      playerEvent: "getViewsYoutubedlPlayerEvent",
-      playerSound: "getViewsYoutubedlPlayerSound",
-      playerVolume: "getViewsYoutubedlPlayerVolume",
-      playerSeek: "getViewsYoutubedlPlayerSeek",
-      playerLoaded: "getViewsYoutubedlPlayerLoaded",
-      playerMetadataTitle: "getViewsYoutubedlPlayerMetadataTitle",
-      playerMetadataArtists: "getViewsYoutubedlPlayerMetadataArtists",
-      playerMetadataImg: "getViewsYoutubedlPlayerMetadataImg",
-      playerMetadataDuration: "getViewsYoutubedlPlayerMetadataDuration",
+      playerEvent: "getSharedPlayerEvent",
+      playerState: "getSharedPlayerState",
+      playerMetadata: "getSharedPlayerMetadata"
     })
   },
   watch: {

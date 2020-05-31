@@ -8,7 +8,7 @@
       >
         <v-col cols="12">
           <h1 class="display-1">
-            Multimedia
+            Anything To Audio Converter (ATAC)
           </h1>
           <v-divider />
           <p class="font-weight-light font-italic pt-2">
@@ -40,13 +40,13 @@
 <script>
 import Vue from "vue";
 import Player from "@/components/Player.vue";
-import DirectLinkExtractor from "@/views/apps/Multimedia/DirectLinkExtractor";
-import Converter from "@/views/apps/Multimedia/Converter";
+import DirectLinkExtractor from "@/views/apps/AnythingToAudioConverter/DirectLinkExtractor";
+import Converter from "@/views/apps/AnythingToAudioConverter/Converter";
 import Axios from "axios";
 import Globals from "@/globals";
 
 export default Vue.extend({
-  name: "Multimedia",
+  name: "AnythingToAudioConverter",
   components: { DirectLinkExtractor, Converter, Player },
   data: () => ({
     Globals: Globals
@@ -55,10 +55,10 @@ export default Vue.extend({
     loadArtistsData: function() {
       Axios.get(this.Globals.API_URL__YTDL_CONVERTER + '/info/artists')
         .then(response => {
-          this.$store.commit("setApisAppsYoutubedlArtistsData", response.data.data.artists);
+          this.$store.commit("setApisAppsAtacArtistsData", response.data.data.artists);
         })
         .catch(error => {
-          this.$store.commit("setApisAppsYoutubedlArtistsData", []);
+          this.$store.commit("setApisAppsAtacArtistsData", []);
           console.log(error);
         });
     }

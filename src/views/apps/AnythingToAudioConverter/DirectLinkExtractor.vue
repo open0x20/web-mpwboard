@@ -74,7 +74,7 @@ import Sheet from "@/components/Sheet.vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({
-  name: "YouTubeDL",
+  name: "DirectLinkExtractor",
   components: { Sheet },
   data: () => ({
     Globals: Globals,
@@ -91,18 +91,18 @@ export default Vue.extend({
   methods: {
     onClickExtract: function() {
       this.table.isLoading = true;
-      this.$store.commit("setViewsYoutubedlDirectLinkInputValue", this.input);
+      this.$store.commit("setViewsAtacDirectLinkInputValue", this.input);
       Axios.get(
         this.Globals.API_URL__YTDL_DIRECT_LINK_EXTRACTOR +
           "?url=" +
           encodeURI(this.input)
       )
         .then(response => {
-          this.$store.commit("setApisAppsYoutubedlDirectLinkData", response.data.links);
+          this.$store.commit("setApisAppsAtacDirectLinkData", response.data.links);
           this.table.isLoading = false;
         })
         .catch(error => {
-          this.$store.commit("setApisAppsYoutubedlDirectLinkData", []);
+          this.$store.commit("setApisAppsAtacDirectLinkData", []);
           this.table.isLoading = false;
           console.log(error);
         });
@@ -110,8 +110,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      getTableData: "getApisAppsYoutubedlDirectLinkData",
-      getInputValue: "getViewsYoutubedlDirectLinkInputValue"
+      getTableData: "getApisAppsAtacDirectLinkData",
+      getInputValue: "getViewsAtacDirectLinkInputValue"
     })
   },
   mounted() {

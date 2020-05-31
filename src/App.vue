@@ -178,7 +178,7 @@ export default Vue.extend({
     navigationDrawer: {
       isCollapsed: true,
       customApps: [
-        { title: "Multimedia", icon: "mdi-download", route: "/apps/multimedia" },
+        { title: "ATAC", icon: "mdi-download", route: "/apps/atac" },
         { title: "NAS-Browser", icon: "mdi-forum", route: "/apps/nas-browser" }
       ]
     }

@@ -6,7 +6,7 @@ import Chat from "@/views/Chat.vue";
 import Examples from "@/views/Examples.vue";
 
 // Custom Apps
-import Multimedia from "@/views/apps/Multimedia/Multimedia.vue";
+import AnythingToAudioConverter from "@/views/apps/AnythingToAudioConverter/AnythingToAudioConverter.vue";
 import NasBrowser from "@/views/apps/NasBrowser.vue";
 
 Vue.use(VueRouter);
@@ -33,9 +33,9 @@ const routes = [
     component: Examples
   },
   {
-    path: "/apps/multimedia",
-    name: "Multimedia",
-    component: Multimedia
+    path: "/apps/atac",
+    name: "AnythingToAudioConverter",
+    component: AnythingToAudioConverter
   },
   {
     path: "/apps/nas-browser",

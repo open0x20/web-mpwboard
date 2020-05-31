@@ -503,7 +503,7 @@ export default Vue.extend({
   },
   computed: {
       ...mapGetters({
-        getArtistsData: "getApisAppsYoutubedlArtistsData"
+        getArtistsData: "getApisAppsAtacArtistsData"
       })
     },
   watch: {

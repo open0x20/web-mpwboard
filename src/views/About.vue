@@ -18,7 +18,7 @@
             <Sheet title="Additional Information">
               <v-container>
                 <p class="font-weight-light">
-                  YouTubeDl / Songs
+                  ATAC / Converter
                 </p>
                 <v-text-field
                         label="API Endpoint"
@@ -31,7 +31,7 @@
                         disabled
                 />
                 <p class="font-weight-light">
-                  YouTubeDl / Direct Link
+                  ATAC / Direct Link
                 </p>
                 <v-text-field
                   label="API Endpoint"

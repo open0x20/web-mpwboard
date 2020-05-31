@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     apis: {
       apps: {
-        youtubedl: {
+        atac: {
           directLinkData: [],
           songsData: [],
           artistsData: []
@@ -15,111 +15,73 @@ export default new Vuex.Store({
       }
     },
     views: {
-      youtubedl: {
-        player: {
-          event: { id: 0, event: ""},
+      atac: {
+        directLinkInputValue: "",
+      }
+    },
+    shared: {
+      player: {
+        event: { id: 0, event: ""},
+        state: {
           track: {},
           sound: {} as Howl,
           volume: 100,
           seek: 0,
           loaded: false,
-          metadata: {
-            title: "No title",
-            artists: "No Artists",
-            duration: 260,
-            img: ""
-          }
         },
-        directLinkInputValue: "",
-      }
+        metadata: {
+          title: "No title",
+          artists: "No Artists",
+          duration: 260,
+          img: ""
+        }
+      },
     }
   },
   getters: {
-    getApisAppsYoutubedlDirectLinkData(state) {
-      return state.apis.apps.youtubedl.directLinkData;
+    getApisAppsAtacDirectLinkData(state) {
+      return state.apis.apps.atac.directLinkData;
     },
-    getViewsYoutubedlDirectLinkInputValue(state) {
-      return state.views.youtubedl.directLinkInputValue;
+    getViewsAtacDirectLinkInputValue(state) {
+      return state.views.atac.directLinkInputValue;
     },
-    getApisAppsYoutubedlSongsData(state) {
-      return state.apis.apps.youtubedl.songsData;
+    getApisAppsAtacSongsData(state) {
+      return state.apis.apps.atac.songsData;
     },
-    getApisAppsYoutubedlArtistsData(state) {
-      return state.apis.apps.youtubedl.artistsData;
+    getApisAppsAtacArtistsData(state) {
+      return state.apis.apps.atac.artistsData;
     },
-    getViewsYoutubedlPlayerEvent(state) {
-      return state.views.youtubedl.player.event;
+    getSharedPlayerEvent(state) {
+      return state.shared.player.event;
     },
-    getViewsYoutubedlPlayerTrack(state) {
-      return state.views.youtubedl.player.track;
+    getSharedPlayerState(state) {
+      return state.shared.player.state;
     },
-    getViewsYoutubedlPlayerSound(state) {
-      return state.views.youtubedl.player.sound;
+    getSharedPlayerMetadata(state) {
+      return state.shared.player.metadata;
     },
-    getViewsYoutubedlPlayerVolume(state) {
-      return state.views.youtubedl.player.volume;
-    },
-    getViewsYoutubedlPlayerSeek(state) {
-      return state.views.youtubedl.player.seek;
-    },
-    getViewsYoutubedlPlayerLoaded(state) {
-      return state.views.youtubedl.player.loaded;
-    },
-    getViewsYoutubedlPlayerMetadataTitle(state) {
-      return state.views.youtubedl.player.metadata.title;
-    },
-    getViewsYoutubedlPlayerMetadataArtists(state) {
-      return state.views.youtubedl.player.metadata.artists;
-    },
-    getViewsYoutubedlPlayerMetadataDuration(state) {
-      return state.views.youtubedl.player.metadata.duration;
-    },
-    getViewsYoutubedlPlayerMetadataImg(state) {
-      return state.views.youtubedl.player.metadata.img;
-    }
   },
   mutations: {
-    setApisAppsYoutubedlDirectLinkData: (state, links) => {
-      state.apis.apps.youtubedl.directLinkData = links;
+    setApisAppsAtacDirectLinkData: (state, links) => {
+      state.apis.apps.atac.directLinkData = links;
     },
-    setViewsYoutubedlDirectLinkInputValue: (state, value) => {
-      state.views.youtubedl.directLinkInputValue = value;
+    setViewsAtacDirectLinkInputValue: (state, value) => {
+      state.views.atac.directLinkInputValue = value;
     },
-    setApisAppsYoutubedlSongsData(state, value) {
-      state.apis.apps.youtubedl.songsData = value;
+    setApisAppsAtacSongsData(state, value) {
+      state.apis.apps.atac.songsData = value;
     },
-    setApisAppsYoutubedlArtistsData(state, value) {
-      state.apis.apps.youtubedl.artistsData = value;
+    setApisAppsAtacArtistsData(state, value) {
+      state.apis.apps.atac.artistsData = value;
     },
-    setViewsYoutubedlPlayerEvent(state, value) {
-      state.views.youtubedl.player.event = value;
+    setSharedPlayerEvent(state, value) {
+      state.shared.player.event = value;
     },
-    setViewsYoutubedlPlayerTrack(state, value) {
-      state.views.youtubedl.player.track = value;
+    setSharedPlayerState(state, value) {
+      state.shared.player.state = value;
     },
-    setViewsYoutubedlPlayerSound(state, value) {
-      state.views.youtubedl.player.sound = value;
-    },
-    setViewsYoutubedlPlayerVolume(state, value) {
-      state.views.youtubedl.player.volume = value;
-    },
-    setViewsYoutubedlPlayerSeek(state, value) {
-      state.views.youtubedl.player.seek = value;
-    },
-    setViewsYoutubedlPlayerLoaded(state, value) {
-      state.views.youtubedl.player.loaded = value;
-    },
-    setViewsYoutubedlPlayerMetadataTitle(state, value) {
-      state.views.youtubedl.player.metadata.title = value;
-    },
-    setViewsYoutubedlPlayerMetadataArtists(state, value) {
-      state.views.youtubedl.player.metadata.artists = value;
-    },
-    setViewsYoutubedlPlayerMetadataDuration(state, value) {
-      state.views.youtubedl.player.metadata.duration = value;
-    },
-    setViewsYoutubedlPlayerMetadataImg(state, value) {
-      state.views.youtubedl.player.metadata.img = value;
+    setSharedPlayerMetadata(state, value) {
+      state.shared.player.metadata = value;
     }
   },
   actions: {},

@@ -236,7 +236,7 @@
 import Vue from "vue";
 import Globals from "@/globals";
 import Sheet from "@/components/Sheet.vue";
-import EditTitle from "@/views/apps/Multimedia/EditTitle.vue";
+import EditTitle from "@/views/apps/AnythingToAudioConverter/EditTitle.vue";
 import {mapGetters} from "vuex";
 import Axios from "axios";
 import TitleHelper from "@/helper";
@@ -291,13 +291,13 @@ export default Vue.extend({
             });
             // Compare to previous table data, only update table fi new data is present
             if (JSON.stringify(this.getTableData) !== JSON.stringify(mappedTableData)) {
-              this.$store.commit("setApisAppsYoutubedlSongsData", response.data.data.tracks);
+              this.$store.commit("setApisAppsAtacSongsData", response.data.data.tracks);
               this.table.data = mappedTableData;
             }
             this.table.isLoading = false;
           })
           .catch(error => {
-            this.$store.commit("setApisAppsYoutubedlSongsData", []);
+            this.$store.commit("setApisAppsAtacSongsData", []);
             this.table.isLoading = false;
             console.log(error);
           });
@@ -343,8 +343,8 @@ export default Vue.extend({
           return;
         }
         console.log("Playing item " + item.trackId);
-        this.$store.commit("setViewsYoutubedlPlayerTrack", item);
-        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "start"});
+        this.$store.commit("setSharedPlayerState", {...this.playerState, track: item});
+        this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "start"});
       },
       onFormatterUpdate: function() {
         this.formatter.text = TitleHelper.getFormattedTitleByMetadata(
@@ -358,9 +358,9 @@ export default Vue.extend({
     },
     computed: {
         ...mapGetters({
-          getTableData: "getApisAppsYoutubedlSongsData",
-          playerEvent: "getViewsYoutubedlPlayerEvent",
-          playerTrack: "getViewsYoutubedlPlayerTrack",
+          getTableData: "getApisAppsAtacSongsData",
+          playerEvent: "getSharedPlayerEvent",
+          playerState: "getSharedPlayerState",
         })
     },
     mounted: function() {
