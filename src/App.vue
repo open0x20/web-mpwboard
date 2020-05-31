@@ -154,19 +154,26 @@
               </v-list-item-content>
             </v-list-item>
           </v-list>
+          <v-divider />
+          <MiniPlayer />
         </template>
       </v-navigation-drawer>
       <router-view class="view" />
     </v-content>
+
+    <!-- Helper Components -->
+    <PlayerManager />
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import MiniPlayer from "@/components/MiniPlayer.vue";
+import PlayerManager from "@/components/PlayerManager.vue";
 
 export default Vue.extend({
   name: "App",
-  components: {},
+  components: { MiniPlayer, PlayerManager },
   data: () => ({
     navigationDrawer: {
       isCollapsed: true,

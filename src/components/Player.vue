@@ -20,7 +20,7 @@
             class="mr-2"
           >
             <v-img
-              :src="this.imgCover"
+              :src="playerMetadataImg"
               min-height="95"
               max-height="95"
               min-width="95"
@@ -36,10 +36,10 @@
             >
               <v-col>
                 <p class="font-weight-regular white--text ma-0">
-                  {{ this.lblTitle }}
+                  {{ playerMetadataTitle }}
                 </p>
                 <p class="font-weight-light caption white--text ma-0">
-                  {{ this.lblArtists }}
+                  {{ playerMetadataArtists }}
                 </p>
               </v-col>
             </v-row>
@@ -131,7 +131,7 @@
                   <v-slider
                     class="mt-0 mb-0"
                     vertical
-                    v-model="volume"
+                    v-model="sliderVolume"
                     min="0"
                     max="100"
                     @change="mediaPlayerChangeVolume"
@@ -182,16 +182,12 @@ export default Vue.extend({
   name: "Player",
   data: () => ({
     Globals: Globals,
-    sound: {} as Howl,
-    imgCover: "",
-    lblTitle: "No title",
-    lblArtists: "No artists",
     btnPlay: {
       isPlayIcon: true,
       loading: false,
       disabled: false
     },
-    volume: 100,
+    sliderVolume: 100,
     slider: {
       min: 0,
       max: 260,
@@ -201,32 +197,33 @@ export default Vue.extend({
   }),
   methods: {
     mediaPlayerClickPrevious: function() {
-      //
+      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "previous"});
     },
     mediaPlayerClickPlay: function() {
-      this.btnPlay.isPlayIcon = !this.btnPlay.isPlayIcon;
-      if (!this.btnPlay.isPlayIcon) {
-        this.sound.play();
-        this.mediaPlayerStartTrackingProgression();
+      if (this.btnPlay.isPlayIcon) {
+        this.playerSound.play()
+        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "play"});
       } else {
-        this.sound.pause();
-        this.mediaPlayerStopTrackingProgression();
+        this.playerSound.pause()
+        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "pause"});
       }
 
     },
     mediaPlayerClickNext: function() {
-      //
+      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "next"});
     },
     mediaPlayerClickLoop: function() {
-      //
+      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "loop"});
     },
     mediaPlayerChangeVolume: function() {
-      this.sound.volume(this.volume / 100.0);
+      this.playerSound.volume(this.sliderVolume / 100.0);
+      this.$store.commit("setViewsYoutubedlPlayerVolume", (this.sliderVolume));
+      this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "volume"});
     },
     mediaPlayerClickSlider: function() {
       console.log("Player: Jump to " + this.slider.value + " sec");
       this.mediaPlayerStopTrackingProgression();
-      this.sound.seek(this.slider.value);
+      this.playerSound.seek(this.slider.value);
       this.mediaPlayerStartTrackingProgression();
     },
     sliderStartDragging: function() {
@@ -239,7 +236,7 @@ export default Vue.extend({
     },
     mediaPlayerStartTrackingProgression: function() {
       this.slider.intervalId = setInterval(() => {
-        const position = this.sound.seek();
+        const position = this.playerSound.seek();
         if (typeof position === "number") {
           this.slider.value = position;
         }
@@ -250,7 +247,7 @@ export default Vue.extend({
         clearInterval(this.slider.intervalId);
       }
     },
-    formatAsTime: function(value: number) {
+    formatAsTime: function(value: number) { // TODO export into helper class
       const minutes = Math.floor(value / 60);
       const seconds = Math.floor(value - (minutes * 60));
 
@@ -259,58 +256,87 @@ export default Vue.extend({
       } else {
         return minutes + ":" + seconds;
       }
+    },
+    onPlayerLoadEvent: function() {
+      this.btnPlay.isPlayIcon = true;
+      this.btnPlay.loading = true;
+      this.slider.value = 0;
+    },
+    onPlayerPlayEvent: function() {
+      this.slider.max = this.playerMetadataDuration;
+      this.btnPlay.loading = false;
+      this.btnPlay.isPlayIcon = false;
+      this.mediaPlayerStartTrackingProgression();
+    },
+    onPlayerPauseEvent: function() {
+      this.btnPlay.isPlayIcon = true;
+      this.mediaPlayerStopTrackingProgression();
+    },
+    onPlayerVolumeEvent: function() {
+      this.sliderVolume =  this.playerVolume;
+    },
+    onPlayerSeekEvent: function() {
+      this.slider.value = this.playerSeek;
+    },
+    onPlayerResetEvent: function() {
+      this.btnPlay.isPlayIcon = true;
+      this.slider.value = 0;
+      this.mediaPlayerStopTrackingProgression();
     }
   },
   mounted() {
-    //
+    if (this.playerLoaded) {
+      this.sliderVolume =  this.playerVolume;
+      this.slider.value = this.playerSound.seek();
+      this.slider.max = this.playerMetadataDuration;
+      if (this.playerSound.playing()) {
+        this.onPlayerPlayEvent();
+      }
+    }
+  },
+  beforeDestroy() {
+    console.log("leaving");
+    this.mediaPlayerStopTrackingProgression();
   },
   computed: {
     ...mapGetters({
-      getPlayerTrack: "getViewsYoutubedlPlayerTrack"
+      getPlayerTrack: "getViewsYoutubedlPlayerTrack",
+      playerEvent: "getViewsYoutubedlPlayerEvent",
+      playerSound: "getViewsYoutubedlPlayerSound",
+      playerVolume: "getViewsYoutubedlPlayerVolume",
+      playerSeek: "getViewsYoutubedlPlayerSeek",
+      playerLoaded: "getViewsYoutubedlPlayerLoaded",
+      playerMetadataTitle: "getViewsYoutubedlPlayerMetadataTitle",
+      playerMetadataArtists: "getViewsYoutubedlPlayerMetadataArtists",
+      playerMetadataImg: "getViewsYoutubedlPlayerMetadataImg",
+      playerMetadataDuration: "getViewsYoutubedlPlayerMetadataDuration",
     })
   },
   watch: {
-    getPlayerTrack: function (newValue) {
-      // Clear previous
-      this.mediaPlayerStopTrackingProgression();
-      if (this.slider.intervalId !== -1) {
-        this.sound.stop();
+    playerEvent: function (newValue) {
+      switch (newValue.name) {
+        case "load":
+          this.onPlayerLoadEvent();
+          break;
+        case "previous":
+        case "play":
+          this.onPlayerPlayEvent();
+          break;
+        case "pause":
+          this.onPlayerPauseEvent();
+          break;
+        case "next":
+        case "loop":
+        case "volume":
+          this.onPlayerVolumeEvent();
+          break;
+        case "seek":
+          this.onPlayerSeekEvent();
+          break;
+        case "reset":
+          this.onPlayerResetEvent();
+          break;
       }
-
-      // Load new song
-      this.btnPlay.loading = true;
-      this.sound = new Howl({
-        src: [Globals.API_URL__YTDL_CONVERTER + "/stream/" + newValue.trackId + "?name=player"],
-        format: ["mp3"]
-      });
-
-      // Load Metadata stuff
-      this.imgCover = newValue.urlCover;
-      this.lblTitle = newValue.title;
-      this.lblArtists = newValue.artists.join(", ");
-      if (newValue.featuring.length > 0) {
-        this.lblArtists += " ft. " + newValue.featuring.join(", ");
-      }
-
-      // Play new song upon being loaded
-      this.sound.once("load", () => {
-        this.btnPlay.loading = false;
-        //this.btnPlay.disabled = false;
-        this.btnPlay.isPlayIcon = false;
-        this.sound.play();
-        this.slider.min = 0;
-        this.slider.max = this.sound.duration();
-        this.slider.value = 0;
-        this.mediaPlayerStartTrackingProgression();
-        this.sound.once("end", () => {
-          clearInterval(this.slider.intervalId);
-          this.btnPlay.isPlayIcon = true;
-          this.slider.value = 0;
-          this.sound.stop();
-          this.sound.seek(0);
-        });
-      });
-
     }
   },
 });

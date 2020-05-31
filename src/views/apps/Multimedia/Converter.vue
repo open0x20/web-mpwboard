@@ -341,6 +341,8 @@ export default Vue.extend({
       actionBtnPlay: function(item) {
         console.log("Playing item " + item.trackId);
         this.$store.commit("setViewsYoutubedlPlayerTrack", item);
+        this.$store.commit("setViewsYoutubedlPlayerEvent", {id: (this.playerEvent.id + 1), name: "start"});
+        //window.scrollTo(0,0);
       },
       onFormatterUpdate: function() {
         this.formatter.text = TitleHelper.getFormattedTitleByMetadata(
@@ -354,7 +356,8 @@ export default Vue.extend({
     },
     computed: {
         ...mapGetters({
-            getTableData: "getApisAppsYoutubedlSongsData"
+          getTableData: "getApisAppsYoutubedlSongsData",
+          playerEvent: "getViewsYoutubedlPlayerEvent",
         })
     },
     mounted: function() {
