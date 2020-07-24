@@ -161,7 +161,7 @@
       <router-view class="view" />
     </v-content>
 
-    <!-- Helper Components -->
+    <!-- Helper Components --> 
     <PlayerManager />
   </v-app>
 </template>
