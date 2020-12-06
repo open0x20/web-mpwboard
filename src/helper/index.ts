@@ -195,7 +195,9 @@ export default class TitleHelper {
 	 * @param data
 	 */
 	public static fetchTitle(data: any) {
-		if (data.title.includes("\\u") || data.title === null) {
+		if (data.title === null) {
+			return data.alternativeTitle;
+		} else if (data.title.includes("\\u")) {
 			return data.alternativeTitle;
 		} else {
 			return data.title;
