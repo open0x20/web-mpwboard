@@ -7,7 +7,7 @@ pipeline {
                 echo 'Building...'
                 sh '#npm install'
                 sh '#npm run build'
-                sh 'mkdir dist && touch dist/test1.txt && touch dist/test2.abc'
+                sh 'touch dist/test1.txt && touch dist/test2.abc'
             }
         }
         stage('Test') {
