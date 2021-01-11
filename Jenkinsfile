@@ -7,7 +7,6 @@ pipeline {
                 echo 'Building...'
                 sh '#npm install'
                 sh '#npm run build'
-                sh 'touch dist/test1.txt && touch dist/test2.abc'
             }
         }
         stage('Test') {
@@ -19,7 +18,8 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sh 'ls -al'
-                sh 'ls -al dist/'
+                sh 'cd dist/'
+                sh 'ls -al'
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
@@ -48,7 +48,7 @@ pipeline {
                                     makeEmptyDirs: false,
                                     noDefaultExcludes: false,
                                     patternSeparator: '[, ]+',
-                                    remoteDirectory: '',
+                                    remoteDirectory: 'web-mpwboard',
                                     remoteDirectorySDF: false,
                                     removePrefix: '',
                                     sourceFiles: '*'
