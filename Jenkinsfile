@@ -5,8 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'npm install'
-                sh 'npm run build'
+                sh '#npm install'
+                sh '#npm run build'
+                sh 'mkdir dist && touch dist/test1.txt && touch dist/test2.abc'
             }
         }
         stage('Test') {
@@ -20,7 +21,7 @@ pipeline {
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
-                            configName: 'DEPLOY@WEB_HOST_1',
+                            configName: 'DEPLOY@WEB_HOST_0',
                             transfers: [
                                 sshTransfer(
                                     cleanRemote: false,
