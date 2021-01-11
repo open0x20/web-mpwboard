@@ -35,7 +35,7 @@ pipeline {
                                     remoteDirectory: 'web-mpwboard',
                                     remoteDirectorySDF: false,
                                     removePrefix: 'dist',
-                                    sourceFiles: 'dist/*'
+                                    sourceFiles: 'dist/**'
                                 )
                             ],
                             usePromotionTimestamp: false,
