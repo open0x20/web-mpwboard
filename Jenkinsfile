@@ -28,16 +28,30 @@ pipeline {
                                 sshTransfer(
                                     cleanRemote: false,
                                     excludes: '',
-                                    execCommand: 'date',
+                                    execCommand: 'rm -rf web-mpwboard/',
                                     execTimeout: 120000,
                                     flatten: false,
                                     makeEmptyDirs: false,
                                     noDefaultExcludes: false,
                                     patternSeparator: '[, ]+',
-                                    remoteDirectory: 'web-mpwboard',
+                                    remoteDirectory: '',
                                     remoteDirectorySDF: false,
                                     removePrefix: '',
-                                    sourceFiles: 'dist/*'
+                                    sourceFiles: ''
+                                ),
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand: '',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: '',
+                                    sourceFiles: '*'
                                 )
                             ],
                             usePromotionTimestamp: false,
