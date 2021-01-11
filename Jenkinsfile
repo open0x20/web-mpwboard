@@ -26,6 +26,20 @@ pipeline {
                                 sshTransfer(
                                     cleanRemote: false,
                                     excludes: '',
+                                    execCommand: 'pwd; ls -al;',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '[, ]+',
+                                    remoteDirectory: '',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: '',
+                                    sourceFiles: ''
+                                ),
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
                                     execCommand: 'rm -rf web-mpwboard/',
                                     execTimeout: 120000,
                                     flatten: false,
