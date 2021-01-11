@@ -18,6 +18,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                sh 'ls -al'
+                sh 'ls -al dist/'
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
@@ -35,7 +37,7 @@ pipeline {
                                     remoteDirectory: 'web-mpwboard',
                                     remoteDirectorySDF: false,
                                     removePrefix: '',
-                                    sourceFiles: 'dist/.*'
+                                    sourceFiles: 'dist/*'
                                 )
                             ],
                             usePromotionTimestamp: false,
