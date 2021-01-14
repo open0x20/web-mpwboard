@@ -6,6 +6,9 @@ pipeline {
             steps {
                 echo 'Building...'
                 sh 'npm install'
+                withCredentials([file(credentialsId: 'dd055e3b-e78a-4155-9399-30c160457d83', variable: 'secretsFile')]) {
+                    sh 'rm src/globals.ts && cat $secretsFile > src/globals.txt'
+                }
                 sh 'npm run build'
             }
         }
