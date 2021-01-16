@@ -333,7 +333,7 @@ export default Vue.extend({
 
         // Open image searchInput in new tab
         window.open(
-          'https://duckduckgo.com/?q=' + encodeURI(title) + '+album+cover&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
+          'https://duckduckgo.com/?q=' + encodeURIComponent(title) + '+album+cover&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
           '_blank'
         );
       },
