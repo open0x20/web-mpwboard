@@ -5,11 +5,11 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'npm install'
+                sh 'node --max-heap-size=512 /usr/bin/npm install'
                 withCredentials([file(credentialsId: 'dd055e3b-e78a-4155-9399-30c160457d83', variable: 'secretsFile')]) {
                     sh 'cat $secretsFile > src/globals.ts'
                 }
-                sh 'npm run build'
+                sh 'node --max-heap-size=512 /usr/bin/npm run build'
             }
         }
         stage('Test') {
