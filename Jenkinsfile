@@ -39,7 +39,7 @@ pipeline {
                                     makeEmptyDirs: false,
                                     noDefaultExcludes: false,
                                     patternSeparator: '[, ]+',
-                                    remoteDirectory: 'web-mpwboard',
+                                    remoteDirectory: 'web-mpwboard--development',
                                     remoteDirectorySDF: false,
                                     removePrefix: 'dist',
                                     sourceFiles: 'dist/**'
