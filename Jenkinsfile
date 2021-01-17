@@ -4,20 +4,22 @@ pipeline {
             image 'node:latest'
         }
     }
-    environment {
-        HOME = '.'
-    }
     stages {
-        stage('Build') {
+        stage('Install') {
             steps {
-                echo 'Building...'
+                echo 'Installing...'
                 sh 'node --max-heap-size=1024 $(which npm) install'
-                withCredentials([file(credentialsId: 'dd055e3b-e78a-4155-9399-30c160457d83', variable: 'secretsFile')]) {
-                    sh 'cat $secretsFile > src/globals.ts'
-                }
-                sh 'node --max-heap-size=1024 $(which npm) run build'
             }
         }
+        stage('Build') {
+                    steps {
+                        echo 'Building...'
+                        withCredentials([file(credentialsId: 'dd055e3b-e78a-4155-9399-30c160457d83', variable: 'secretsFile')]) {
+                            sh 'cat $secretsFile > src/globals.ts'
+                        }
+                        sh 'node --max-heap-size=1024 $(which npm) run build'
+                    }
+                }
         stage('Test') {
             steps {
                 echo 'Testing..'
