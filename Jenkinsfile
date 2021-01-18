@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Installing...'
                 sh 'id; pwd; printenv'
-                sh '$(which npm) install --no-bin-links'
+                sh '$(which npm) install'
             }
         }
         stage('Build') {
