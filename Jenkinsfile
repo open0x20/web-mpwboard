@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Installing...'
                 sh 'id; pwd; printenv'
-                sh 'node --max-heap-size=1024 $(which npm) install'
+                sh 'node --max-heap-size=1024 $(which npm) install --force'
             }
         }
         stage('Build') {
