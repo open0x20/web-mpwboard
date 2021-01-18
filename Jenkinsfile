@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Installing...'
                 sh 'id; pwd; printenv'
-                sh 'node --max-heap-size=1024 $(which npm) install --force'
+                sh '$(which npm) install --force'
             }
         }
         stage('Build') {
@@ -21,7 +21,7 @@ pipeline {
                         withCredentials([file(credentialsId: 'dd055e3b-e78a-4155-9399-30c160457d83', variable: 'secretsFile')]) {
                             sh 'cat $secretsFile > src/globals.ts'
                         }
-                        sh 'node --max-heap-size=1024 $(which npm) run build'
+                        sh '$(which npm) run build'
                     }
                 }
         stage('Test') {
