@@ -32,7 +32,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'ls -al'
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
