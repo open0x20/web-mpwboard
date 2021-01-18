@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Installing...'
                 sh 'id; pwd; printenv'
-                sh '$(which npm) install --force'
+                sh '$(which npm) install --verbose'
             }
         }
         stage('Build') {
