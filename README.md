@@ -10,7 +10,7 @@ a user interface.
 Applications with their own user interface can be integrated by the use of iframes.
 
 ## How to setup for development
-1. Install nodejs for the platform of your choice. For RaspberryPi binary visit nodesource.
+1. Install nodejs for the platform of your choice. For RaspberryPi binaries visit nodesource.
     ```
     # Debian
     apt install node
@@ -22,7 +22,7 @@ Applications with their own user interface can be integrated by the use of ifram
     ```
     npm install -g @vue/cli
    ```
-3. Move into the directory and start the vue project manager. Navigate to "Tasks" and click on "serve".
+3. Move into the directory and start the vue project manager. Navigate to "Tasks" and click on "Serve".
    A development server with hot reloading should spin up any second.
     ```
     # Start dev gui
@@ -49,7 +49,7 @@ this.Globals.API_URL__ATAC
 
 ## How do I create a custom app page?
 Well walk trough an example, an application called "bookshelf" to manage ebooks.
-1. You start by adding the title and future URL location the the `src/App.vue`
+1. You start by adding the title, icon and future URL location to `src/App.vue`.
    ```
    customApps: [
       { title: "ATAC", icon: "mdi-download", route: "/apps/atac" },
@@ -125,8 +125,8 @@ It should reside within the `src/views/` directory. If its going to be more than
 You are done! Now reload the page and enjoy your new custom app page!
 
 ## What views can I use for my page?
-To quickly put something into containers you can use a view called `Sheet`. You can put
-anything into sheets, even more sheets!
+To quickly put something into a container you can use a view called `Sheet`. You can put
+anything into sheets... even more sheets!
 
 ![View of the example page](/docs/example-view-2.png)
 
@@ -162,7 +162,7 @@ DataTable within a sheet:
    </v-container>
 </Sheet>
 ```
-For more detailed code look up the examples view in `src/views/Examples.vue`.
+For more insights look up the examples view in `src/views/Examples.vue`.
 
 ## Tips & Tricks
 * If you have trouble integrating your application within an iframe, don't forget the CORS
