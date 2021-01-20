@@ -1,15 +1,27 @@
 pipeline {
-    agent any
-
+    agent {
+        docker {
+            image 'node:14.5'
+        }
+    }
+    environment {
+        HOME = '.'
+    }
     stages {
+        stage('Install') {
+            steps {
+                echo 'Installing...'
+                echo 'If installing fails because of java heap out of memory exceptions, simply rerun the build.'
+                sh '$(which npm) install'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building...'
-                sh 'node --max-heap-size=512 /usr/bin/npm install'
                 withCredentials([file(credentialsId: 'dd055e3b-e78a-4155-9399-30c160457d83', variable: 'secretsFile')]) {
                     sh 'cat $secretsFile > src/globals.ts'
                 }
-                sh 'node --max-heap-size=512 /usr/bin/npm run build'
+                sh '$(which npm) run build'
             }
         }
         stage('Test') {
@@ -20,7 +32,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh 'ls -al'
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
@@ -35,7 +46,7 @@ pipeline {
                                     makeEmptyDirs: false,
                                     noDefaultExcludes: false,
                                     patternSeparator: '[, ]+',
-                                    remoteDirectory: 'web-mpwboard',
+                                    remoteDirectory: 'web-mpwboard--development',
                                     remoteDirectorySDF: false,
                                     removePrefix: 'dist',
                                     sourceFiles: 'dist/**'

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import {Howl} from "howler";
 
 Vue.use(Vuex);
 
