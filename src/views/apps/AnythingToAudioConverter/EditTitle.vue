@@ -228,7 +228,7 @@ import globals from "@/globals";
 import TitleHelper from "@/helper";
 
 export default Vue.extend({
-    name: "AddLink",
+    name: "EditTitle",
     components: {},
     props: ['activeItem'],
     data: () => ({
