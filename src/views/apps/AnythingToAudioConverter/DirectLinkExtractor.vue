@@ -1,6 +1,6 @@
 <template>
   <div class="ytdl">
-    <Sheet title="Direct Link Extractor">
+    <Sheet title="Direct Link Extractor [DEPRECATED]">
       <v-container>
         <v-row>
           <v-col cols="12">

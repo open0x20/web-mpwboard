@@ -18,30 +18,17 @@
             <Sheet title="Additional Information">
               <v-container>
                 <p class="font-weight-light">
-                  ATAC / Converter
+                  ATAC
                 </p>
                 <v-text-field
                         label="API Endpoint"
-                        :value="Globals.API_URL__YTDL_CONVERTER"
+                        :value="Globals.API_URL__ATAC"
                         disabled
                 />
                 <v-text-field
                         label="Project Source"
                         value="https://gitlab.com/0x6861636b657220/api-ytv-converter"
                         disabled
-                />
-                <p class="font-weight-light">
-                  ATAC / Direct Link
-                </p>
-                <v-text-field
-                  label="API Endpoint"
-                  :value="Globals.API_URL__YTDL_DIRECT_LINK_EXTRACTOR"
-                  disabled
-                />
-                <v-text-field
-                  label="Project Source"
-                  value="https://github.com/Athlon1600/youtube-downloader"
-                  disabled
                 />
                 <p class="font-weight-light">
                   NAS-Browser

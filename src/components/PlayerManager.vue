@@ -24,7 +24,7 @@ export default Vue.extend({
 
       // Load new song
       const sound = new Howl({
-        src: [Globals.API_URL__YTDL_CONVERTER + "/stream/" + this.playerState.track.trackId + "?name=player"],
+        src: [Globals.API_URL__ATAC + "/stream/" + this.playerState.track.trackId + "?name=player"],
         format: ["mp3"]
       });
       this.$store.commit("setSharedPlayerState", {...this.playerState, sound: sound});

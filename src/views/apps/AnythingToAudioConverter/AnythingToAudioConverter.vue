@@ -53,7 +53,7 @@ export default Vue.extend({
   }),
   methods: {
     loadArtistsData: function() {
-      Axios.get(this.Globals.API_URL__YTDL_CONVERTER + '/info/artists')
+      Axios.get(this.Globals.API_URL__ATAC + '/info/artists')
         .then(response => {
           this.$store.commit("setApisAppsAtacArtistsData", response.data.data.artists);
         })

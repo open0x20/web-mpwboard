@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-card>
         <v-card-title>
-          <span class="headline">Add New Title</span>
+          <span class="headline">Edit Title</span>
         </v-card-title>
         <v-divider />
         <v-card-text class="pb-0">
@@ -271,7 +271,7 @@ export default Vue.extend({
         this.inputVideoIsLoading = true;
         this.inputVideoIsDisabled = true;
         Axios.get(
-                this.Globals.API_URL__YTDL_CONVERTER +
+                this.Globals.API_URL__ATAC +
                 "/info/check_ytv" +
                 "?url=" +
                 encodeURI(this.inputVideoUrl)
@@ -301,7 +301,7 @@ export default Vue.extend({
         this.inputCoverIsLoading = true;
         this.inputCoverIsDisabled = true;
         Axios.get(
-                this.Globals.API_URL__YTDL_CONVERTER +
+                this.Globals.API_URL__ATAC +
                 "/info/check_cover" +
                 "?url=" +
                 encodeURI(this.inputCoverUrl)
@@ -399,7 +399,7 @@ export default Vue.extend({
         console.log(payload);
 
         this.btnAdd.isLoading = true;
-        Axios.post(this.Globals.API_URL__YTDL_CONVERTER + "/add", payload)
+        Axios.post(this.Globals.API_URL__ATAC + "/add", payload)
                 .then(response => {
                   alert("OK");
                   this.btnAdd.isLoading = false;

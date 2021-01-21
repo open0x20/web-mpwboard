@@ -279,7 +279,7 @@ export default Vue.extend({
       tableFetchData: function() {
         this.table.isLoading = true;
         // TODO pagination
-        Axios.get(this.Globals.API_URL__YTDL_CONVERTER + '/info/tracks')
+        Axios.get(this.Globals.API_URL__ATAC + '/info/tracks')
           .then(response => {
             // Add glued artists and featuring artists strings to each track
             const mappedTableData = response.data.data.tracks.map(o => {
@@ -323,11 +323,11 @@ export default Vue.extend({
                 item.title
         );
         console.log("Downloading item " + item.trackId + " with title: " + title);
-        window.open(this.Globals.API_URL__YTDL_CONVERTER + "/stream/" + item.trackId + "?name=" + encodeURIComponent(title), "_self");
+        window.open(this.Globals.API_URL__ATAC + "/stream/" + item.trackId + "?name=" + encodeURIComponent(title), "_self");
       },
       actionBtnDelete: function(item) {
         console.log("Deleting item " + item.trackId);
-        confirm("Are you sure you want to delete this item? (" + item.title + ")") && Axios.post(this.Globals.API_URL__YTDL_CONVERTER + "/delete", JSON.stringify({trackId:item.trackId}))
+        confirm("Are you sure you want to delete this item? (" + item.title + ")") && Axios.post(this.Globals.API_URL__ATAC + "/delete", JSON.stringify({trackId:item.trackId}))
                 .then(response => {
                   if (response.data.data.trackid === item.trackId) {
                     const index = this.table.data.indexOf(item)
