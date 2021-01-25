@@ -66,7 +66,7 @@
       </v-menu>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-navigation-drawer
         v-model="navigationDrawer.isCollapsed"
         color="#262626"
@@ -159,7 +159,7 @@
         </template>
       </v-navigation-drawer>
       <router-view class="view" />
-    </v-content>
+    </v-main>
 
     <!-- Helper Components --> 
     <PlayerManager />
@@ -179,7 +179,8 @@ export default Vue.extend({
       isCollapsed: true,
       customApps: [
         { title: "ATAC", icon: "mdi-download", route: "/apps/atac" },
-        { title: "NAS-Browser", icon: "mdi-forum", route: "/apps/nas-browser" }
+        { title: "NAS-Browser", icon: "mdi-forum", route: "/apps/nas-browser" },
+        { title: "DNSmasq Configurator", icon: "mdi-forum", route: "/apps/dnsmasq-dynconf" }
       ]
     }
   })

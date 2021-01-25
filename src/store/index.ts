@@ -12,6 +12,10 @@ export default new Vuex.Store({
           directLinkData: [],
           songsData: [],
           artistsData: []
+        },
+        dnsmasqDynconf: {
+          sessionSecret: "",
+          addresses: []
         }
       }
     },
@@ -61,6 +65,12 @@ export default new Vuex.Store({
     getSharedPlayerMetadata(state) {
       return state.shared.player.metadata;
     },
+    getApisAppsDnsmasqDynconfAddresses(state) {
+      return state.apis.apps.dnsmasqDynconf.addresses;
+    },
+    getApisAppsDnsmasqDynconfSessionSecret(state) {
+      return state.apis.apps.dnsmasqDynconf.sessionSecret;
+    },
   },
   mutations: {
     setApisAppsAtacDirectLinkData: (state, links) => {
@@ -83,7 +93,13 @@ export default new Vuex.Store({
     },
     setSharedPlayerMetadata(state, value) {
       state.shared.player.metadata = value;
-    }
+    },
+    setApisAppsDnsmasqDynconfAddresses(state, value) {
+      state.apis.apps.dnsmasqDynconf.addresses = value;
+    },
+    setApisAppsDnsmasqDynconfSessionSecret(state, value) {
+      state.apis.apps.dnsmasqDynconf.sessionSecret = value;
+    },
   },
   actions: {},
   modules: {}

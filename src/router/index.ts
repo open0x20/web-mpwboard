@@ -8,6 +8,7 @@ import Examples from "@/views/Examples.vue";
 // Custom Apps
 import AnythingToAudioConverter from "@/views/apps/AnythingToAudioConverter/AnythingToAudioConverter.vue";
 import NasBrowser from "@/views/apps/NasBrowser.vue";
+import DnsmasqDynconf from "@/views/apps/DnsmasqDynconf/DnsmasqDynconf.vue";
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,11 @@ const routes = [
     path: "/apps/nas-browser",
     name: "NasBrowser",
     component: NasBrowser
+  },
+  {
+    path: "/apps/dnsmasq-dynconf",
+    name: "DnsmasqDynconf",
+    component: DnsmasqDynconf
   },
 ];
 
