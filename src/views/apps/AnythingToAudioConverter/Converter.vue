@@ -4,7 +4,7 @@
       v-model="table.addDialog.show"
       max-width="600px"
     >
-      <EditTitle :active-item="table.addDialog.activeItem" />
+      <EditTitleDialog :active-item="table.addDialog.activeItem" />
     </v-dialog>
     <v-container>
       <v-row
@@ -236,14 +236,14 @@
 import Vue from "vue";
 import Globals from "@/globals";
 import Sheet from "@/components/Sheet.vue";
-import EditTitle from "@/views/apps/AnythingToAudioConverter/EditTitle.vue";
+import EditTitleDialog from "@/views/apps/AnythingToAudioConverter/EditTitleDialog.vue";
 import {mapGetters} from "vuex";
 import Axios from "axios";
 import TitleHelper from "@/helper";
 
 export default Vue.extend({
     name: "Songs",
-    components: { Sheet, EditTitle },
+    components: { Sheet, EditTitleDialog },
     data: () => ({
       Globals: Globals,
       table: {
@@ -311,7 +311,6 @@ export default Vue.extend({
         },1500)
       },
       actionBtnUpdate: function(item) {
-        console.log("Updating item " + item.trackId);
         this.table.addDialog.activeItem = item;
         this.table.addDialog.show = true;
       },
@@ -322,11 +321,9 @@ export default Vue.extend({
                 item.featuring,
                 item.title
         );
-        console.log("Downloading item " + item.trackId + " with title: " + title);
         window.open(this.Globals.API_URL__ATAC + "/stream/" + item.trackId + "?name=" + encodeURIComponent(title), "_self");
       },
       actionBtnDelete: function(item) {
-        console.log("Deleting item " + item.trackId);
         confirm("Are you sure you want to delete this item? (" + item.title + ")") && Axios.post(this.Globals.API_URL__ATAC + "/delete", JSON.stringify({trackId:item.trackId}))
                 .then(response => {
                   if (response.data.data.trackid === item.trackId) {
@@ -342,7 +339,6 @@ export default Vue.extend({
         if (JSON.stringify(item) === JSON.stringify(this.playerTrack)) {
           return;
         }
-        console.log("Playing item " + item.trackId);
         this.$store.commit("setSharedPlayerState", {...this.playerState, track: item});
         this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "start"});
       },

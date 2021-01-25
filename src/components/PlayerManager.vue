@@ -5,7 +5,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Globals from "@/globals";
-import {Howl, Howler} from "howler";
+import {Howl} from "howler";
 import {mapGetters} from "vuex";
 
 export default Vue.extend({
@@ -67,7 +67,6 @@ export default Vue.extend({
   },
   watch: {
     playerEvent: function (newValue) {
-      console.log("Player Event: " + newValue.name);
       switch (newValue.name) {
         case "start":
           this.onPlayerStartEvent();

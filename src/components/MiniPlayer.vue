@@ -106,7 +106,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Globals from "@/globals";
-import {Howl, Howler} from "howler";
+import {Howl} from "howler";
 import {mapGetters} from "vuex";
 import MarqueeText from 'vue-marquee-text-component';
 

@@ -228,9 +228,14 @@ import globals from "@/globals";
 import TitleHelper from "@/helper";
 
 export default Vue.extend({
-    name: "EditTitle",
+    name: "EditTitleDialog",
     components: {},
-    props: ['activeItem'],
+    props: {
+      activeItem: {
+        type: Object,
+        default: function() { return {} }
+      }
+    },
     data: () => ({
       Globals: globals,
       snackbar: true,
@@ -396,11 +401,9 @@ export default Vue.extend({
           payload.album = this.inputAlbum;
         }
 
-        console.log(payload);
-
         this.btnAdd.isLoading = true;
         Axios.post(this.Globals.API_URL__ATAC + "/add", payload)
-                .then(response => {
+                .then(() => {
                   alert("OK");
                   this.btnAdd.isLoading = false;
                 })
@@ -507,7 +510,7 @@ export default Vue.extend({
       })
     },
   watch: {
-      activeItem: function(newItem, oldItem) {
+      activeItem: function(newItem) {
         this.reset(true);
 
         //

@@ -175,7 +175,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Globals from "@/globals";
-import {Howl, Howler} from "howler";
 import {mapGetters} from "vuex";
 
 export default Vue.extend({
@@ -221,7 +220,6 @@ export default Vue.extend({
       this.$store.commit("setSharedPlayerEvent", {id: (this.playerEvent.id + 1), name: "volume"});
     },
     mediaPlayerClickSlider: function() {
-      console.log("Player: Jump to " + this.slider.value + " sec");
       this.mediaPlayerStopTrackingProgression();
       this.playerState.sound.seek(this.slider.value);
       this.mediaPlayerStartTrackingProgression();
@@ -295,7 +293,6 @@ export default Vue.extend({
     }
   },
   beforeDestroy() {
-    console.log("leaving");
     this.mediaPlayerStopTrackingProgression();
   },
   computed: {

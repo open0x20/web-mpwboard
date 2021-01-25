@@ -21,14 +21,14 @@
                   ATAC
                 </p>
                 <v-text-field
-                        label="API Endpoint"
-                        :value="Globals.API_URL__ATAC"
-                        disabled
+                  label="API Endpoint"
+                  :value="Globals.API_URL__ATAC"
+                  disabled
                 />
                 <v-text-field
-                        label="Project Source"
-                        value="https://gitlab.com/0x6861636b657220/api-ytv-converter"
-                        disabled
+                  label="Project Source"
+                  value="https://gitlab.com/0x6861636b657220/api-ytv-converter"
+                  disabled
                 />
                 <p class="font-weight-light">
                   NAS-Browser
