@@ -255,11 +255,11 @@ export default Vue.extend({
         searchInput: "",
         isLoading: false,
         headers: [
-              {text: "Id", value: "trackId"},
-              {text: "Title", value: "title"},
-              {text: "Artist(s)", value: "artistsStr"},
-              {text: "Feat. Artist(s)", value: "featArtistsStr"},
-              {text: 'Actions', value: 'actions', sortable: false },
+          {text: "Id", value: "trackId"},
+          {text: "Title", value: "title"},
+          {text: "Artist(s)", value: "artistsStr"},
+          {text: "Feat. Artist(s)", value: "featArtistsStr"},
+          {text: 'Actions', value: 'actions', sortable: false },
         ],
         data: []
       },
@@ -278,29 +278,28 @@ export default Vue.extend({
     methods: {
       tableFetchData: function() {
         this.table.isLoading = true;
-        // TODO pagination
         Axios.get(this.Globals.API_URL__ATAC + '/info/tracks')
-          .then(response => {
-            // Add glued artists and featuring artists strings to each track
-            const mappedTableData = response.data.data.tracks.map(o => {
-              return {
-                ...o,
-                artistsStr: o.artists.join(", "),
-                featArtistsStr: o.featuring.join(", "),
-              }
-            });
-            // Compare to previous table data, only update table fi new data is present
-            if (JSON.stringify(this.getTableData) !== JSON.stringify(mappedTableData)) {
-              this.$store.commit("setApisAppsAtacSongsData", response.data.data.tracks);
-              this.table.data = mappedTableData;
+        .then(response => {
+          // Add glued artists and featuring artists strings to each track
+          const mappedTableData = response.data.data.tracks.map(o => {
+            return {
+              ...o,
+              artistsStr: o.artists.join(", "),
+              featArtistsStr: o.featuring.join(", "),
             }
-            this.table.isLoading = false;
-          })
-          .catch(error => {
-            this.$store.commit("setApisAppsAtacSongsData", []);
-            this.table.isLoading = false;
-            console.log(error);
           });
+          // Compare to previous table data, only update table fi new data is present
+          if (JSON.stringify(this.getTableData) !== JSON.stringify(mappedTableData)) {
+            this.$store.commit("setApisAppsAtacSongsData", response.data.data.tracks);
+            this.table.data = mappedTableData;
+          }
+          this.table.isLoading = false;
+        })
+        .catch(error => {
+          this.$store.commit("setApisAppsAtacSongsData", []);
+          this.table.isLoading = false;
+          console.log(error);
+        });
       },
       tableClickRefresh: function() {
         this.table.isLoading = true;
@@ -316,24 +315,30 @@ export default Vue.extend({
       },
       actionBtnDownload: function(item) {
         const title = TitleHelper.getFormattedTitleByMetadata(
-                [this.formatter.artistsSelection,this.formatter.featuringArtistsSelection,this.formatter.featuringStyleSelection,this.formatter.orientationSelection],
-                item.artists,
-                item.featuring,
-                item.title
+          [this.formatter.artistsSelection,this.formatter.featuringArtistsSelection,this.formatter.featuringStyleSelection,this.formatter.orientationSelection],
+          item.artists,
+          item.featuring,
+          item.title
         );
         window.open(this.Globals.API_URL__ATAC + "/stream/" + item.trackId + "?name=" + encodeURIComponent(title), "_self");
       },
       actionBtnDelete: function(item) {
-        confirm("Are you sure you want to delete this item? (" + item.title + ")") && Axios.post(this.Globals.API_URL__ATAC + "/delete", JSON.stringify({trackId:item.trackId}))
-                .then(response => {
-                  if (response.data.data.trackid === item.trackId) {
-                    const index = this.table.data.indexOf(item)
-                    this.table.data.splice(index, 1)
-                  }
-                })
-                .catch(error => {
-                  console.log(error);
-                });
+        const choice = confirm("Are you sure you want to delete this item? (" + item.title + ")");
+        if (choice) {
+          Axios.post(
+              this.Globals.API_URL__ATAC + "/delete",
+              JSON.stringify({trackId:item.trackId})
+          )
+          .then(response => {
+            if (response.data.data.trackid === item.trackId) {
+              const index = this.table.data.indexOf(item)
+              this.table.data.splice(index, 1)
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        }
       },
       actionBtnPlay: function(item) {
         if (JSON.stringify(item) === JSON.stringify(this.playerTrack)) {
@@ -353,19 +358,22 @@ export default Vue.extend({
       },
     },
     computed: {
-        ...mapGetters({
-          getTableData: "getApisAppsAtacSongsData",
-          playerEvent: "getSharedPlayerEvent",
-          playerState: "getSharedPlayerState",
-        })
+      ...mapGetters({
+        getTableData: "getApisAppsAtacSongsData",
+        playerEvent: "getSharedPlayerEvent",
+        playerState: "getSharedPlayerState",
+      })
     },
     mounted: function() {
+      this.table.isLoading = true;
+      setTimeout(() => {
         this.tableFetchData();
-        this.onFormatterUpdate();
+      }, 1500);
+      this.onFormatterUpdate();
 
-        setInterval(() => {
-          this.tableFetchData();
-        }, 60000)
+      setInterval(() => {
+        this.tableFetchData();
+      }, 60000);
     }
 });
 </script>

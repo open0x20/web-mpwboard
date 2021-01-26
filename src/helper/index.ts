@@ -196,6 +196,7 @@ export default class TitleHelper {
 	 *
 	 * @param data
 	 */
+	// eslint-disable-next-line
 	public static fetchTitle(data: any) {
 		if (data.title === null) {
 			return data.alternativeTitle;

@@ -54,9 +54,9 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-              color="primary darken-1"
-              text
-              @click="forgetSecret"
+            color="primary darken-1"
+            text
+            @click="forgetSecret"
           >
             Forget
           </v-btn>

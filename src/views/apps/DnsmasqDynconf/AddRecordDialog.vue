@@ -1,12 +1,12 @@
 <template>
-  <v-container class="pt-0 pb-0">
+  <v-container>
     <v-row justify="center">
       <v-card>
         <v-card-title>
-          <span class="headline">Add New Entry</span>
+          <span class="headline">Add New Record</span>
         </v-card-title>
         <v-divider />
-        <v-card-text class="pb-0">
+        <v-card-text>
           <v-container class="pb-0 pt-0">
             <v-row
               align="center"
@@ -71,7 +71,7 @@ import Axios from "axios";
 import {mapGetters} from "vuex";
 
 export default Vue.extend({
-  name: "AddEntryDialog",
+  name: "AddRecordDialog",
   components: {},
   props: {
     endpoint: {
@@ -95,15 +95,16 @@ export default Vue.extend({
           JSON.stringify({name:this.inputName,ip:this.inputIp,secret:this.getSessionSecret}),
           {headers: {'Content-Type': 'application/json'}}
       )
-          .then(() => {
-            alert('Added sucessfully!')
-            this.btnAdd.isLoading = false;
-          })
-          .catch(error => {
-            alert('Oops. Something went wrong! Error written to console.')
-            console.log(error);
-            this.btnAdd.isLoading = false;
-          });
+      .then(() => {
+        alert('Added sucessfully!');
+      })
+      .catch(error => {
+        alert('Oops. Something went wrong! Error written to console.')
+        console.log(error);
+      })
+      .finally(() => {
+        this.btnAdd.isLoading = false;
+      });
     },
     onClickReset: function() {
       this.inputName = '';

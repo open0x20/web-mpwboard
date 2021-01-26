@@ -12,15 +12,15 @@
           </h1>
           <v-divider />
           <p class="font-weight-light font-italic pt-2">
-            Manage your local DNSmasq name entries dynamically!
+            Manage your local DNSmasq name records dynamically!
           </p>
           <v-col cols="12">
-            <Sheet title="Entries by Endpoint">
+            <Sheet title="Records by Endpoint">
               <v-dialog
                 v-model="table.addDialog.show"
                 max-width="400px"
               >
-                <AddEntryDialog :endpoint="endpoints[selectedEndpoint].text" />
+                <AddRecordDialog :endpoint="endpoints[selectedEndpoint].text" />
               </v-dialog>
               <v-dialog
                 v-model="table.authorizationDialog.show"
@@ -39,7 +39,7 @@
                     class="pb-0"
                   >
                     <p class="font-weight-light">
-                      Select an endpoint and it will automatically fetch all available name entries for that dnsmasq-dynconf instance.
+                      Select an endpoint and it will automatically fetch all available name records for that dnsmasq-dynconf instance.
                     </p>
                   </v-col>
 
@@ -49,7 +49,7 @@
                     class=""
                   >
                     <v-select
-                      v-model="endpointSelect"
+                      v-model="selectedEndpoint"
                       :items="endpoints"
                       @change="onEndpointSelection"
                       label="Endpoint"
@@ -60,7 +60,7 @@
                     />
                   </v-col>
 
-                  <!-- Table: DNS entries/records -->
+                  <!-- Table: DNS records -->
                   <v-col
                     cols="12"
                     class="mb-0"
@@ -71,7 +71,7 @@
                           <v-row no-gutters>
                             <v-col>
                               <h3 class="title">
-                                Entries
+                                Records
                               </h3>
                             </v-col>
                             <v-col
@@ -175,19 +175,18 @@
 import Vue from "vue";
 import {mapGetters} from "vuex";
 import Sheet from "@/components/Sheet";
-import AddEntryDialog from "@/views/apps/DnsmasqDynconf/AddEntryDialog.vue";
+import AddRecordDialog from "@/views/apps/DnsmasqDynconf/AddRecordDialog.vue";
 import AuthorizationDialog from "@/views/apps/DnsmasqDynconf/AuthorizationDialog.vue";
 import globals from "@/globals";
 import Axios from "axios";
 
 export default Vue.extend({
   name: "DnsmasqDynconf",
-  components: { Sheet, AddEntryDialog, AuthorizationDialog },
+  components: { Sheet, AddRecordDialog, AuthorizationDialog },
   data: () => ({
     Globals: globals,
     selectedEndpoint: 0,
     endpoints: globals.DNSMASQ_DYNCONF_ENDPOINT_LIST,
-    endpointSelect: 0,
     table: {
       addDialog: {
         show: false
@@ -208,7 +207,10 @@ export default Vue.extend({
   }),
   methods: {
     onEndpointSelection: function() {
-      this.tableFetchData();
+      this.table.isLoading = true;
+      setTimeout(() => {
+        this.tableFetchData();
+      }, 1500);
     },
     onClickAddDialogShow: function() {
       // Show authorization dialog if secret is not yet set
@@ -221,22 +223,22 @@ export default Vue.extend({
     },
     tableFetchData: function() {
       this.table.isLoading = true;
-      // TODO pagination
       Axios.get(this.endpoints[this.selectedEndpoint].text + '/list')
-          .then(response => {
-            this.$store.commit("setApisAppsDnsmasqDynconfAddresses", response.data.addresses);
-            this.table.data = response.data.addresses;
-            this.table.isLoading = false;
-          })
-          .catch(error => {
-            this.$store.commit("setApisAppsDnsmasqDynconfAddresses", []);
-            this.table.isLoading = false;
-            console.log(error);
-          });
+      .then(response => {
+        this.$store.commit("setApisAppsDnsmasqDynconfAddresses", response.data.addresses);
+        this.table.data = response.data.addresses;
+        this.table.isLoading = false;
+      })
+      .catch(error => {
+        this.$store.commit("setApisAppsDnsmasqDynconfAddresses", []);
+        this.table.isLoading = false;
+        console.log(error);
+      });
     },
     tableClickRefresh: function() {
       this.table.isLoading = true;
       this.table.btnRefreshDisabled = true;
+
       setTimeout(() => {
         this.tableFetchData();
         this.table.btnRefreshDisabled = false;
@@ -252,23 +254,36 @@ export default Vue.extend({
         return;
       }
 
-      confirm("Are you sure you want to delete this item? (" + item.name + ":" + item.ip + ")")
-      && Axios.post(
+      const choice = confirm("Are you sure you want to delete this item? (" + item.name + ":" + item.ip + ")")
+      if (choice) {
+        this.table.isLoading = true;
+        Axios.post(
           this.endpoints[this.selectedEndpoint].text + '/delete',
           JSON.stringify({name:item.name,ip:item.ip,secret:this.getSessionSecret}),
           {headers: {'Content-Type': 'application/json'}}
-      )
-          .then(() => {
-            const index = this.table.data.indexOf(item)
-            this.table.data.splice(index, 1)
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        )
+        .then(() => {
+          const index = this.table.data.indexOf(item)
+          this.table.data.splice(index, 1)
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.table.isLoading = false;
+        });
+      }
     },
   },
   mounted: function() {
-    this.tableFetchData();
+    this.table.isLoading = true;
+    setTimeout(() => {
+      this.tableFetchData();
+    }, 1500);
+
+    setInterval(() => {
+      this.tableFetchData();
+    }, 60000);
   },
   computed: {
     ...mapGetters({
