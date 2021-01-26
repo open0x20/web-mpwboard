@@ -126,10 +126,10 @@
                   </v-icon>
                 </v-btn>
               </template>
-              <v-row class="player-volume">
+              <v-row class="player-volume ma-0">
                 <v-col class="pa-1">
                   <v-slider
-                    class="mt-0 mb-0"
+                    class="mt-0 mb-3"
                     vertical
                     v-model="sliderVolume"
                     min="0"
