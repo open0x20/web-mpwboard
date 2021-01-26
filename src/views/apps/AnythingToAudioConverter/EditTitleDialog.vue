@@ -1,12 +1,12 @@
 <template>
-  <v-container class="pt-0 pb-0">
+  <v-container>
     <v-row justify="center">
       <v-card>
         <v-card-title>
           <span class="headline">Edit Title</span>
         </v-card-title>
         <v-divider />
-        <v-card-text class="pb-0">
+        <v-card-text>
           <v-container class="pb-0 pt-0">
             <v-row
               align="center"

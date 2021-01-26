@@ -1,12 +1,14 @@
 <template>
-  <v-container class="pt-0 pb-0">
+  <v-container>
     <v-row justify="center">
-      <v-card>
+      <v-card
+        width="400px"
+      >
         <v-card-title>
           <span class="headline">Authorization</span>
         </v-card-title>
         <v-divider />
-        <v-card-text class="pb-0">
+        <v-card-text>
           <v-container class="pb-0 pt-4">
             <v-row
               align="center"
@@ -102,7 +104,6 @@ export default Vue.extend({
 
       this.$store.commit("setApisAppsDnsmasqDynconfSessionSecret", this.inputSecret);
       this.inputSecretIsError = false;
-      this.close();
     },
     onChangeInputSecret: function() {
       this.inputSecretIsError = false;
