@@ -102,6 +102,9 @@ export default class TitleHelper {
 			"( hq )",
 			"(hq-flac)",
 			"( hq-flac )",
+			"(original mix)",
+			"(original mix)",
+			"(remix)",
 			"4k",
 			"1080p",
 			"1080",
@@ -110,6 +113,7 @@ export default class TitleHelper {
 			"480p",
 			"480",
 			"360p",
+			"full album"
 		];
 
 		// Search for common phrases
