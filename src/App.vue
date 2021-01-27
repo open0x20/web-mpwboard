@@ -158,7 +158,9 @@
           <MiniPlayer />
         </template>
       </v-navigation-drawer>
-      <router-view class="view" />
+      <transition name="fade">
+        <router-view class="view" />
+      </transition>
     </v-main>
 
     <!-- Helper Components --> 
@@ -186,3 +188,17 @@ export default Vue.extend({
   })
 });
 </script>
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .15s;
+}
+
+.fade-enter-active {
+  transition-delay: .25s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+</style>
