@@ -288,9 +288,9 @@ export default Vue.extend({
               featArtistsStr: o.featuring.join(", "),
             }
           });
-          // Compare to previous table data, only update table fi new data is present
+          // Compare to previous table data, only update table if new data is present
           if (JSON.stringify(this.getTableData) !== JSON.stringify(mappedTableData)) {
-            this.$store.commit("setApisAppsAtacSongsData", response.data.data.tracks);
+            this.$store.commit("setApisAppsAtacSongsData", mappedTableData);
             this.table.data = mappedTableData;
           }
           this.table.isLoading = false;
@@ -366,9 +366,13 @@ export default Vue.extend({
     },
     mounted: function() {
       this.table.isLoading = true;
+      if (this.getTableData.length > 0) {
+        this.table.data = this.getTableData;
+      }
       setTimeout(() => {
         this.tableFetchData();
       }, 1500);
+
       this.onFormatterUpdate();
 
       setInterval(() => {

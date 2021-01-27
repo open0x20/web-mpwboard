@@ -277,6 +277,9 @@ export default Vue.extend({
   },
   mounted: function() {
     this.table.isLoading = true;
+    if (this.getTableData.length > 0) {
+      this.table.data = this.getTableData;
+    }
     setTimeout(() => {
       this.tableFetchData();
     }, 1500);
@@ -287,8 +290,8 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      getTableData: "getApisAppsDnsmasqDynconfAddresses",
-      getSessionSecret: "getApisAppsDnsmasqDynconfSessionSecret",
+      getTableData: 'getApisAppsDnsmasqDynconfAddresses',
+      getSessionSecret: 'getApisAppsDnsmasqDynconfSessionSecret',
     })
   },
 });
