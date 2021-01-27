@@ -247,6 +247,7 @@ export default Vue.extend({
     data: () => ({
       Globals: Globals,
       table: {
+        refreshIntervalId: 0,
         addDialog: {
           show: false,
           activeItem: {}
@@ -375,9 +376,14 @@ export default Vue.extend({
 
       this.onFormatterUpdate();
 
-      setInterval(() => {
+      this.table.refreshIntervalId = setInterval(() => {
         this.tableFetchData();
       }, 60000);
-    }
+    },
+    beforeDestroy () {
+      clearInterval(this.table.refreshIntervalId);
+    },
 });
 </script>
+
+

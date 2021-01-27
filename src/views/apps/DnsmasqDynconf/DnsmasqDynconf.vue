@@ -188,6 +188,7 @@ export default Vue.extend({
     selectedEndpoint: 0,
     endpoints: globals.DNSMASQ_DYNCONF_ENDPOINT_LIST,
     table: {
+      refreshIntervalId: 0,
       addDialog: {
         show: false
       },
@@ -284,9 +285,12 @@ export default Vue.extend({
       this.tableFetchData();
     }, 1500);
 
-    setInterval(() => {
+    this.table.refreshIntervalId = setInterval(() => {
       this.tableFetchData();
     }, 60000);
+  },
+  beforeDestroy () {
+    clearInterval(this.table.refreshIntervalId);
   },
   computed: {
     ...mapGetters({
