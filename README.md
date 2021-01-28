@@ -1,36 +1,40 @@
 # Multi Purpose Web Board
-A platform for every small project out there with the need for a small GUI.
+A frontend for small APIs.
 
 ![View of a custom app page](/docs/example-view.png)
 
-The multi purpose web board (short mpwb) is a JS frontend developed around VueJS. It has no
-specific purpose other than enabling smaller applications to have a simple and fast way to create
-a user interface.
+The multi purpose web board (short mpwb) is a JS frontend developed with VueJS.
+It is mainly used by the open0x20 community to provide user interfaces for
+specific applications.
 
 Applications with their own user interface can be integrated by the use of iframes.
+## Applications
+A list of all currently integrated applications:
+- ATAC, Anything to audio converter (api-atac)
+- NAS-Browser, MSDOS like file browser (web-nas-browser)
+- DNSmasq-Configurator, tool to manage DNS records (api-dnsmasq-dynconf)
 
-## How to setup for development
+## Development
 1. Install nodejs for the platform of your choice. For RaspberryPi binaries visit nodesource.
     ```
     # Debian
     apt install node
     
-    # RaspberryPi, replace x with version (e.g. 14.5 or 14.x)
+    # Specific version, replace x with version (e.g. 14.5 or 14.x)
     curl -sL https://deb.nodesource.com/setup_x | sudo bash -
     ```
-2. Install the VueJS CLI tool. It is required.
+2. Install the VueJS CLI tool.
     ```
     npm install -g @vue/cli
    ```
 3. Move into the directory and start the vue project manager. Navigate to "Tasks" and click on "Serve".
    A development server with hot reloading should spin up any second.
     ```
-    # Start dev gui
-    cd web-mpwdboard/
+    cd web-mpwboard/
     vue ui
    ```
 
-## Secrets 
+### Secrets 
 If you want to inject secrets at build time simply contact any of the active developers or the
 maintainer of the jenkins instance. Secrets will be injected into the `src/globals.ts` file and
 accessed by static attributes like this:
@@ -47,7 +51,7 @@ data: () => ({
 this.Globals.API_URL__ATAC
 ```
 
-## How do I create a custom app page?
+### How do I create a custom app page?
 Well walk trough an example, an application called "bookshelf" to manage ebooks.
 1. You start by adding the title, icon and future URL location to `src/App.vue`.
    ```
@@ -124,13 +128,13 @@ It should reside within the `src/views/` directory. If its going to be more than
    ```
 You are done! Now reload the page and enjoy your new custom app page!
 
-## What views can I use for my page?
+### What views can I use for my page?
 To quickly put something into a container you can use a view called `Sheet`. You can put
 anything into sheets... even more sheets!
 
 ![View of the example page](/docs/example-view-2.png)
 
-All you need is a single import statement!
+All you need is a single import statement and a reference in the vue component attribute.
 ```
 <Sheet title="Sheet A">
   <v-container>
@@ -142,6 +146,11 @@ All you need is a single import statement!
 
 <script lang="ts">
    import Sheet from "@/components/Sheet.vue";
+   
+   export default Vue.extend({
+      components: { Sheet }
+   });
+  
 </script>
 ```
 DataTable within a sheet:
@@ -164,6 +173,20 @@ DataTable within a sheet:
 ```
 For more insights look up the examples view in `src/views/Examples.vue`.
 
-## Tips & Tricks
+### Tips & Tricks
 * If you have trouble integrating your application within an iframe, don't forget the CORS
 policies and add an `Access-Control-Allow-Origin` header.
+* If you also have to deal with preflight CORS (OPTIONS) requests you better know how to use nginx.  
+
+## Deployment
+If you want to deploy a feature branch you need to change the deplyoment directory
+specified in `Jenkinsfile` (attrib: "remoteDirectory").
+
+```
+Branch                      | Resulting name of directory
+----------------------------+-----------------------------------------
+master                      | web-mpwboard
+development                 | web-mpwboard--development
+feature/nameoffeature       | web-mpwboard--feature-nameoffeature
+feature/anotherfeaturename  | web-mpwboard--feature-anotherfeaturename
+```
