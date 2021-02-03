@@ -331,14 +331,11 @@ export default Vue.extend({
       },
       clickBtnFindCover: function() {
         // Prepare title for searchInput
-        let title = TitleHelper.removeUnregularTitleSideCharacters(TitleHelper.removeCommonPhrasesFromTitle(this.originalTitle));
-        if (title.length === 0) {
-          title = this.inputTitle;
-        }
+        //let title = TitleHelper.removeUnregularTitleSideCharacters(TitleHelper.removeCommonPhrasesFromTitle(this.originalTitle));
 
         // Open image searchInput in new tab
         window.open(
-          'https://duckduckgo.com/?q=' + encodeURIComponent(title) + '+album+cover&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
+          'https://duckduckgo.com/?q=' + encodeURIComponent(this.inputTitle) + '&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
           '_blank'
         );
       },
