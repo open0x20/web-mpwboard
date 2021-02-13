@@ -330,12 +330,15 @@ export default Vue.extend({
                 });
       },
       clickBtnFindCover: function() {
-        // Prepare title for searchInput
-        //let title = TitleHelper.removeUnregularTitleSideCharacters(TitleHelper.removeCommonPhrasesFromTitle(this.originalTitle));
+        // Figure out what to use for the cover search
+        let searchQuery = '' + encodeURIComponent(this.artistsSelection[0]) + '+' + encodeURIComponent(this.inputTitle);
+        if (this.artistsSelection.length === 0) {
+          searchQuery = TitleHelper.removeCommonPhrasesFromTitle(this.originalTitle);
+        }
 
-        // Open image searchInput in new tab
+        // Open a new tab with a duckduckgo image search
         window.open(
-          'https://duckduckgo.com/?q=' + encodeURIComponent(this.inputTitle) + '&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
+          'https://duckduckgo.com/?q=' + searchQuery + '&iar=images&iaf=layout%3ASquare&iax=images&ia=images',
           '_blank'
         );
       },
