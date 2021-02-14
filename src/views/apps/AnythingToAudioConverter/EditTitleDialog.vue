@@ -334,6 +334,7 @@ export default Vue.extend({
         let searchQuery = '' + encodeURIComponent(this.artistsSelection[0]) + '+' + encodeURIComponent(this.inputTitle);
         if (this.artistsSelection.length === 0) {
           searchQuery = TitleHelper.removeCommonPhrasesFromTitle(this.originalTitle);
+          searchQuery = TitleHelper.removeUnregularTitleSideCharacters(searchQuery);
         }
 
         // Open a new tab with a duckduckgo image search
