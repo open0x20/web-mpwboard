@@ -35,6 +35,7 @@
                         aspect-ratio="0.7"
                         class="align-end white--text"
                         gradient="to top, rgba(10, 0, 0, 0.5) 0%, transparent 200px"
+                        @error="updateImageSource(item)"
                       >
                         <v-card-title class="pb-1">
                           {{ item.name }}
@@ -166,6 +167,10 @@ export default Vue.extend({
             link.click()
             URL.revokeObjectURL(link.href)
           }).catch(console.error)
+    },
+    updateImageSource: function(item) {
+      this.books.find((obj) => obj.name === item.name).cover = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAABPmlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGDiSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8rAxsAMFFRlUEtMLi5wDAjwAfIYYDQq+HaNgRFEX9YFmVW3qflIwJsNAr5GPbWVxeqPMdWjAK6U1OJkIP0HiBOSC4pKGBgYY4Bs5fKSAhC7AcgWKQI6CsieAmKnQ9grQOwkCHsPWE1IkDOQfQHIFkjOSEwBsh8A2TpJSOLpSGyovSDA5mpkYmJIwKGkgpLUihIQ7ZxfUFmUmZ5RouAIDJ1UBc+8ZD0dBSMDI6CFoLCGqP58AxyGjGIcCLGU5wwM5hJAwXMIsdxYBoadeQwMfCcRYiqTGBj4qxgYDk0rSCxKhDuA8RtLcZqxEYTNvZ2BgXXa//+fwxkY2DUZGP5e////9/b///8uY2BgvsXAcOAbAKxcXkbJx+zYAAAAVmVYSWZNTQAqAAAACAABh2kABAAAAAEAAAAaAAAAAAADkoYABwAAABIAAABEoAIABAAAAAEAAAADoAMABAAAAAEAAAACAAAAAEFTQ0lJAAAAU2NyZWVuc2hvdB/EfxYAAAHSaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjI8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+MzwvZXhpZjpQaXhlbFhEaW1lbnNpb24+CiAgICAgICAgIDxleGlmOlVzZXJDb21tZW50PlNjcmVlbnNob3Q8L2V4aWY6VXNlckNvbW1lbnQ+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgrvNZXfAAAAEklEQVQIHWP8DwQMUMAEY4BoAF3wBADWYEaGAAAAAElFTkSuQmCC';
+      this.books = [...this.books]; // We need to copy it for vue to detect changes in the data
     }
   },
   mounted: function() {
