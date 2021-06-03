@@ -182,7 +182,8 @@ export default Vue.extend({
       customApps: [
         { title: "ATAC", icon: "mdi-download", route: "/apps/atac" },
         { title: "NAS-Browser", icon: "mdi-forum", route: "/apps/nas-browser" },
-        { title: "DNSmasq Configurator", icon: "mdi-forum", route: "/apps/dnsmasq-dynconf" }
+        { title: "DNSmasq Configurator", icon: "mdi-forum", route: "/apps/dnsmasq-dynconf" },
+        { title: "Bookshelf", icon: "mdi-forum", route: "/apps/bookshelf" }
       ]
     }
   })

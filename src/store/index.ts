@@ -16,6 +16,9 @@ export default new Vuex.Store({
         dnsmasqDynconf: {
           sessionSecret: "",
           addresses: []
+        },
+        bookshelf: {
+          books: []
         }
       }
     },
@@ -71,6 +74,9 @@ export default new Vuex.Store({
     getApisAppsDnsmasqDynconfSessionSecret(state) {
       return state.apis.apps.dnsmasqDynconf.sessionSecret;
     },
+    getApisAppsBookshelfBooks(state) {
+      return state.apis.apps.bookshelf.books;
+    },
   },
   mutations: {
     setApisAppsAtacDirectLinkData: (state, links) => {
@@ -99,6 +105,9 @@ export default new Vuex.Store({
     },
     setApisAppsDnsmasqDynconfSessionSecret(state, value) {
       state.apis.apps.dnsmasqDynconf.sessionSecret = value;
+    },
+    setApisAppsBookshelfBooks(state, value) {
+      state.apis.apps.bookshelf.books = value;
     },
   },
   actions: {},

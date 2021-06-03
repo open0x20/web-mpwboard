@@ -9,6 +9,7 @@ import Examples from "@/views/Examples.vue";
 import AnythingToAudioConverter from "@/views/apps/AnythingToAudioConverter/AnythingToAudioConverter.vue";
 import NasBrowser from "@/views/apps/NasBrowser.vue";
 import DnsmasqDynconf from "@/views/apps/DnsmasqDynconf/DnsmasqDynconf.vue";
+import Bookshelf from "@/views/apps/Bookshelf/Bookshelf.vue";
 
 Vue.use(VueRouter);
 
@@ -47,6 +48,11 @@ const routes = [
     path: "/apps/dnsmasq-dynconf",
     name: "DnsmasqDynconf",
     component: DnsmasqDynconf
+  },
+  {
+    path: "/apps/bookshelf",
+    name: "Bookshelf",
+    component: Bookshelf
   },
 ];
 
